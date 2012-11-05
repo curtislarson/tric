@@ -37,5 +37,10 @@ public abstract class Stats {
 	{
 		return mName;
 	}
+	
+	public int getCollectionInterval()
+	{
+		return mCollectionInterval;
+	}
 
 }
