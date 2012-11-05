@@ -1,15 +1,26 @@
 package com.quackware.tric.database;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import com.quackware.tric.stats.Stats;
+
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper{
 	
+	private static final String TAG = "DatabaseHelper";
+	
 	private static final String DATABASE_NAME = "tricDB";
 	private static final int DATABASE_VERSION = 1;
 	
 	private static final boolean rebuild = false;
+	
+	private static final String TABLE_CREATE = "CREATE TABLE IF NOT EXISTS ? (_id INTEGER PRIMARY KEY, DATA STRING, TIMESTAMP DATE);";
+	private static final String TABLE_DROP = "DROP TABLE IF EXISTS ?";
 	
 	public DatabaseHelper(Context context)
 	{
@@ -18,7 +29,10 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		//create tables.
+		for(int i = 0;i<Stats.mStatsNames.size();i++)
+		{
+			db.execSQL(TABLE_CREATE,new String[] {Stats.mStatsNames.get(i)});
+		}
 	}
 
 	@Override
@@ -26,8 +40,29 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	{
 		if (oldVersion < DATABASE_VERSION && rebuild)
 		{
-			//drop tables.
+			this.dropTables(db);
 			onCreate(db);
+		}
+	}
+	
+	public void insertNewStat(Stats pStats)
+	{
+		SQLiteDatabase db = getWritableDatabase();
+		ContentValues values = new ContentValues();
+		
+		values.put("DATA",pStats.getStats().toString());
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date date = new Date();
+		values.put("TIMESTAMP",dateFormat.format(date));
+		
+		db.insert(pStats.getName(), null, values);
+	}
+	
+	private void dropTables(SQLiteDatabase db)
+	{
+		for(int i = 0;i<Stats.mStatsNames.size();i++)
+		{
+			db.execSQL(TABLE_DROP,new String[] {Stats.mStatsNames.get(i)});
 		}
 	}
 
