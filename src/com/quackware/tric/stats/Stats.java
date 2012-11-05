@@ -42,5 +42,17 @@ public abstract class Stats {
 	{
 		return mCollectionInterval;
 	}
+	
+	@Override
+	public boolean equals(Object o)
+	{
+		if(o instanceof Stats)
+		{
+			//Not sure if this.getName() will refer to the correct name.
+			if(((Stats)o).getName().equals(this.getName()))
+				return true;
+		}
+		return false;
+	}
 
 }

@@ -3,6 +3,7 @@ package com.quackware.tric.service;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import com.quackware.tric.MyApplication;
 import com.quackware.tric.database.DatabaseHelper;
 import com.quackware.tric.stats.Stats;
 import com.quackware.tric.stats.PhoneStats.*;
@@ -86,6 +87,7 @@ public class CollectionService extends Service {
 		TotalPhoneUptime tpu = new TotalPhoneUptime();
 		TotalPhoneUptimeNoSleep tpuns = new TotalPhoneUptimeNoSleep();
 		launch(tpu,tpuns);
+		MyApplication.addStats(tpu,tpuns);
 	}
 	
 	private void launch(Stats...pStats)
