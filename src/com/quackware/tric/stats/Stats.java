@@ -9,7 +9,7 @@ public abstract class Stats {
 	protected Object mData;
 	
 	//Preferences
-	//Idealy we should be reading these in from preferences
+	//Ideally we should be reading these in from preferences
 	//In minutes (Default to 1 hour)
 	protected int mCollectionInterval = 60;
 	protected boolean mShare = false;

@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">tric</string>
+    <string name="preferences">tric Settings</string>
+    <string name="pref_tric_title">Application Wide Settings</string>
+    <string name="pref_stats_title">Statistics Settings</string>
+    <string name="phonestats_settings">Phone Statistics</string>
+    <string name="socialstats_settings">Social Statistics</string>
+    <string name="appstats_settings">Application Specific Settings</string>
 </resources>
