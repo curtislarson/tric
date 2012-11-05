@@ -10,7 +10,6 @@ import com.quackware.tric.stats.PhoneStats.*;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 
@@ -95,7 +94,8 @@ public class CollectionService extends Service {
 		for(Stats s : pStats)
 		{
 			ArgRunnable a = new ArgRunnable(s);
-			mHandler.postDelayed(a, s.getCollectionInterval()*1000*60);
+			mHandler.post(a);
+			//mHandler.postDelayed(a, s.getCollectionInterval()*1000*60);
 			mRunnableList.add(a);
 		}
 	}
