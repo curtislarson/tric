@@ -1,4 +1,7 @@
-package com.quackware.tric;
+package com.quackware.tric.ui;
+
+import com.quackware.tric.R;
+import com.quackware.tric.R.layout;
 
 import android.app.Activity;
 import android.os.Bundle;
