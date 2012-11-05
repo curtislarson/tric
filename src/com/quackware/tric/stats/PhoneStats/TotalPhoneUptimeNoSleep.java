@@ -12,12 +12,6 @@ public class TotalPhoneUptimeNoSleep extends PhoneStats{
 	}
 
 	@Override
-	public boolean insertIntoDatabase() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public void refreshStats() {
 		Long returnL = SystemClock.uptimeMillis();
 		mData = returnL;

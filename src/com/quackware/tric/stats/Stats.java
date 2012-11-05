@@ -26,9 +26,6 @@ public abstract class Stats {
 		//Read from preferences and set collectioninterval,share,collect, etc.
 	}
 	
-	
-	public abstract boolean insertIntoDatabase();
-	
 	public abstract void refreshStats();
 	
 	public Object getStats()

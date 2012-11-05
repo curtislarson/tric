@@ -10,12 +10,6 @@ public class TotalPhoneUptime extends PhoneStats{
 	{
 		super(mName);
 	}
-	
-	@Override
-	public boolean insertIntoDatabase() {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 	@Override
 	public void refreshStats() {
