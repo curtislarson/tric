@@ -4,8 +4,11 @@ import java.util.ArrayList;
 
 import com.quackware.tric.MyApplication;
 import com.quackware.tric.R;
+import com.quackware.tric.service.CollectionService;
 import com.quackware.tric.stats.Stats;
 
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
@@ -13,13 +16,27 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
 import android.text.InputType;
 
-public class MyPreferenceActivity extends PreferenceActivity {
+public class MyPreferenceActivity extends PreferenceActivity implements OnSharedPreferenceChangeListener {
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		buildPreferenceActivity();
+	}
+	
+	@Override
+	public void onResume()
+	{
+		super.onResume();
+		getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+	}
+	
+	@Override
+	public void onPause()
+	{
+		super.onPause();
+		getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
 	}
 	
 	//The general structure of preferences will remain the same, however we do need to populate it based on the Stats collection.
@@ -83,6 +100,27 @@ public class MyPreferenceActivity extends PreferenceActivity {
 		ps.addPreference(sharePreference);
 		
 		return ps;
+	}
+
+	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+		
+		//Get service for callback.
+		CollectionService service = MyApplication.getService();
+		//First check what preference changed.
+		if(key.startsWith("checkbox_share_"))
+		{
+			//todo later.
+		}
+		else if(key.startsWith("checkbox_collect_"))
+		{
+			String statsName = key.replace("checkbox_collect_", "");
+			service.refreshStatsInfo(MyApplication.getStatsByName(statsName));
+		}
+		else if(key.startsWith("edittext_collectinterval_"))
+		{
+			String statsName = key.replace("edittext_collectinterval_", "");
+			service.refreshStatsInfo(MyApplication.getStatsByName(statsName));
+		}
 	}
 
 }

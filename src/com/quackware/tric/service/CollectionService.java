@@ -51,7 +51,7 @@ public class CollectionService extends Service {
 	
 	public class CollectionBinder extends Binder
 	{
-		CollectionService getService()
+		public CollectionService getService()
 		{
 			return CollectionService.this;
 		}
@@ -82,7 +82,7 @@ public class CollectionService extends Service {
 		launch(pStats);
 	}
 	
-	private void beginCollection()
+	public void beginCollection()
 	{
 		TotalPhoneUptime tpu = new TotalPhoneUptime();
 		TotalPhoneUptimeNoSleep tpuns = new TotalPhoneUptimeNoSleep();
@@ -113,7 +113,7 @@ public class CollectionService extends Service {
 		{
 			mStats.refreshStats();
 			mDatabaseHelper.insertNewStat(mStats);
-			mHandler.postDelayed(this,mStats.getCollectionInterval()*1000*60);
+			mHandler.postDelayed(this,mStats.getDefaultCollectionInterval()*1000*60);
 		}
 		
 	}
