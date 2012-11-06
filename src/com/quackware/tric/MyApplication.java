@@ -20,7 +20,7 @@ public class MyApplication extends Application
 	private static ArrayList<Stats> mGlobalStatsList = new ArrayList<Stats>();
 	
 	private static CollectionService mService;
-	private boolean mBound = false;
+	private static boolean mBound = false;
 	
 	@Override
 	public void onCreate()
