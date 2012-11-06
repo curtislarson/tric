@@ -5,6 +5,7 @@ import android.os.SystemClock;
 public class TotalPhoneUptimeNoSleep extends PhoneStats{
 	
 	private static String mName = "TotalPhoneUptimeNoSleep";
+	private int mDefaultCollectionInterval = 10;
 	
 	public TotalPhoneUptimeNoSleep()
 	{
