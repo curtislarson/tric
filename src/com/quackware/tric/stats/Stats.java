@@ -2,16 +2,23 @@ package com.quackware.tric.stats;
 
 import java.util.ArrayList;
 
+import com.quackware.tric.MyApplication;
+
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
 public abstract class Stats {
 	
 	//Data for every Stats object.
 	private String mName = "Stats";
+	private String mType = "Stats";
 	protected Object mData;
 	
 	//Preferences
 	//Ideally we should be reading these in from preferences
 	//In minutes (Default to 1 hour)
-	protected int mCollectionInterval = 60;
+	protected int mDefaultCollectionInterval = 60;
+	protected int mCollectionInterval;
 	protected boolean mShare = false;
 	protected boolean mCollect = true;
 	
@@ -23,10 +30,16 @@ public abstract class Stats {
 		{
 			mStatsNames.add(pName);
 		}
-		//Read from preferences and set collectioninterval,share,collect, etc.
+
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MyApplication.getInstance());
+		mCollectionInterval = prefs.getInt("edittext_collectinterval_" + pName, mDefaultCollectionInterval);
+		mShare = prefs.getBoolean("checkbox_share_" + pName, false);
+		mCollect = prefs.getBoolean("checkbox_collect_" + pName,true);
 	}
 	
 	public abstract void refreshStats();
+	
+	public abstract String getType();
 	
 	public Object getStats()
 	{
@@ -38,9 +51,9 @@ public abstract class Stats {
 		return mName;
 	}
 	
-	public int getCollectionInterval()
+	public int getDefaultCollectionInterval()
 	{
-		return mCollectionInterval;
+		return mDefaultCollectionInterval;
 	}
 	
 	@Override
