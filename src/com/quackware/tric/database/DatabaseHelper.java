@@ -1,12 +1,16 @@
 package com.quackware.tric.database;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
+import com.quackware.tric.database.SelectType.StatType;
+import com.quackware.tric.database.SelectType.TimeFrame;
 import com.quackware.tric.stats.Stats;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -46,6 +50,93 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		}
 	}
 	
+	public ArrayList<StatData> selectStats(String pName,StatType pType, TimeFrame pTimeFrame)
+	{
+		SQLiteDatabase db = getWritableDatabase();
+		String dataFilter = getDataTypeFilter(pType);
+		String selection = getTimeFrameFilter(pTimeFrame);
+
+		Cursor c = db.query(
+				pName, 
+				new String[] {dataFilter,"TIMESTAMP"},
+				selection,
+				null,
+				null,
+				null,
+				"DATA DESC");
+		
+		c.moveToFirst();
+		String data = c.getString(0);
+		String dateTime = c.getString(1);
+		c.close();
+		ArrayList<StatData> sdList = new ArrayList<StatData>();
+		StatData sd = new StatData();
+		sd.mData = data;
+		sd.mTimestamp = dateTime;
+		sdList.add(sd);
+		return sdList;
+	}
+	
+	private String getTimeFrameFilter(TimeFrame pTimeFrame)
+	{
+		String selection = null;
+		if(pTimeFrame != null)
+		{
+			switch(pTimeFrame)
+			{
+			case DAY:
+				selection = "WHERE TIMESTAMP BETWEEN datetime('now','start of day') AND datetime('now','localtime')";
+				break;
+			case WEEK:
+				selection = "WHERE TIMESTAMP BETWEEN datetime('now',-6 days') AND datetime('now','localtime')";
+				break;
+			case MONTH:
+				selection = "WHERE TIMESTAMP BETWEEN datetime('now','start of month') AND datetime('now','localtime')";
+				break;
+			case YEAR:
+				selection = "WHERE TIMESTAMP BETWEEN datetime('now','start of year' AND datetime('now','localtime')";
+				break;
+			case ALLTIME:
+				break;
+			default:
+				break;
+			}
+		}
+		return selection;
+	}
+	
+	private String getDataTypeFilter(StatType pType)
+	{
+		String dataFilter = null;
+		if(pType != null)
+		{
+			switch(pType)
+			{
+			case HIGHEST:
+				dataFilter = "MAX(DATA)";
+				break;
+			case LOWEST:
+				dataFilter = "MIN(DATA)";
+				break;
+			case AVERAGE:
+				dataFilter = "AVG(DATA)";
+				break;
+			case MEDIAN:
+				//change later
+				dataFilter = "DATA";
+				break;
+			case STDEV:
+				//change later
+				dataFilter = "DATA";
+				break;
+			default:
+				dataFilter = "DATA";
+				break;
+			}
+		}
+		return dataFilter;
+	}
+	
 	public void insertNewStat(Stats pStats)
 	{
 		SQLiteDatabase db = getWritableDatabase();
@@ -65,6 +156,12 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		{
 			db.execSQL(TABLE_DROP + Stats.mStatsNames.get(i));
 		}
+	}
+	
+	public class StatData
+	{
+		public String mData;
+		public String mTimestamp;
 	}
 
 }
