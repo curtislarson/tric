@@ -87,8 +87,8 @@ public class MyPreferenceActivity extends PreferenceActivity implements OnShared
 		collectionIntervalPreference.setKey("edittext_collectinterval_" + s.getName());
 		collectionIntervalPreference.setTitle(getString(R.string.pref_collectinterval_title));
 		collectionIntervalPreference.setSummary(getString(R.string.pref_collectinterval_summary));
-		collectionIntervalPreference.setDefaultValue(s.getDefaultCollectionInterval());
-		collectionIntervalPreference.setDependency("checkbox_collect_" + s.getName());
+		collectionIntervalPreference.setDefaultValue("" + s.getDefaultCollectionInterval());
+		//collectionIntervalPreference.setDependency("checkbox_collect_" + s.getName());
 		collectionIntervalPreference.getEditText().setInputType(InputType.TYPE_CLASS_NUMBER);
 		
 		PreferenceScreen ps = getPreferenceManager().createPreferenceScreen(this);
