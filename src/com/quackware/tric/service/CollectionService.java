@@ -10,9 +10,11 @@ import com.quackware.tric.stats.PhoneStats.*;
 
 import android.app.Service;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 
 public class CollectionService extends Service {
 
@@ -113,7 +115,9 @@ public class CollectionService extends Service {
 		{
 			mStats.refreshStats();
 			mDatabaseHelper.insertNewStat(mStats);
-			mHandler.postDelayed(this,mStats.getDefaultCollectionInterval()*1000*60);
+			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MyApplication.getInstance());
+			int collectionInterval = prefs.getInt("edittext_collectinterval_" + mStats.getName(), mStats.getDefaultCollectionInterval());
+			mHandler.postDelayed(this,collectionInterval*1000*60);
 		}
 		
 	}

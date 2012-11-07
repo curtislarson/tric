@@ -11,6 +11,7 @@ public abstract class PhoneStats extends Stats{
 		super(pName);
 	}
 	
+	
 	public String getType()
 	{
 		return mType;

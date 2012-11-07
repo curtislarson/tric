@@ -13,6 +13,18 @@ public class TotalPhoneUptimeNoSleep extends PhoneStats{
 	}
 
 	@Override
+	public String getName()
+	{
+		return mName;
+	}
+	
+	@Override
+	public int getDefaultCollectionInterval()
+	{
+		return mDefaultCollectionInterval;
+	}
+	
+	@Override
 	public void refreshStats() {
 		Long returnL = SystemClock.uptimeMillis();
 		mData = returnL;

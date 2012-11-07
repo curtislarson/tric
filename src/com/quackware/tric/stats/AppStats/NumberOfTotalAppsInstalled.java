@@ -15,6 +15,18 @@ public class NumberOfTotalAppsInstalled extends AppStats {
 	public NumberOfTotalAppsInstalled() {
 		super(mName);
 	}
+	
+	@Override
+	public String getName()
+	{
+		return mName;
+	}
+	
+	@Override
+	public int getDefaultCollectionInterval()
+	{
+		return mDefaultCollectionInterval;
+	}
 
 	@Override
 	public void refreshStats() {

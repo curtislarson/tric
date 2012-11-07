@@ -18,6 +18,18 @@ public class NumberOfDownloadedAppsInstalled extends AppStats {
 		super(mName);
 		// TODO Auto-generated constructor stub
 	}
+	
+	@Override
+	public String getName()
+	{
+		return mName;
+	}
+	
+	@Override
+	public int getDefaultCollectionInterval()
+	{
+		return mDefaultCollectionInterval;
+	}
 
 	@Override
 	public void refreshStats() {

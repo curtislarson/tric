@@ -19,8 +19,9 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	
 	private static final boolean rebuild = false;
 	
-	private static final String TABLE_CREATE = "CREATE TABLE IF NOT EXISTS ? (_id INTEGER PRIMARY KEY, DATA STRING, TIMESTAMP DATE);";
-	private static final String TABLE_DROP = "DROP TABLE IF EXISTS ?";
+	private static final String TABLE_CREATE_START = "CREATE TABLE IF NOT EXISTS ";
+	private static final String TABLE_CREATE_END = " (_id INTEGER PRIMARY KEY, DATA STRING, TIMESTAMP DATE);";
+	private static final String TABLE_DROP = "DROP TABLE IF EXISTS ";
 	
 	public DatabaseHelper(Context context)
 	{
@@ -31,7 +32,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	public void onCreate(SQLiteDatabase db) {
 		for(int i = 0;i<Stats.mStatsNames.size();i++)
 		{
-			db.execSQL(TABLE_CREATE,new String[] {Stats.mStatsNames.get(i)});
+			db.execSQL(TABLE_CREATE_START + Stats.mStatsNames.get(i) + TABLE_CREATE_END);
 		}
 	}
 
@@ -62,7 +63,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	{
 		for(int i = 0;i<Stats.mStatsNames.size();i++)
 		{
-			db.execSQL(TABLE_DROP,new String[] {Stats.mStatsNames.get(i)});
+			db.execSQL(TABLE_DROP + Stats.mStatsNames.get(i));
 		}
 	}
 

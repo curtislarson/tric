@@ -1,8 +1,5 @@
 package com.quackware.tric.stats.AppStats;
 
-import java.util.List;
-
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
 import com.quackware.tric.MyApplication;
@@ -14,6 +11,18 @@ public class NumberOfTotalAppsUninstalled extends AppStats {
 
 	public NumberOfTotalAppsUninstalled() {
 		super(mName);
+	}
+	
+	@Override
+	public String getName()
+	{
+		return mName;
+	}
+	
+	@Override
+	public int getDefaultCollectionInterval()
+	{
+		return mDefaultCollectionInterval;
 	}
 
 	@Override

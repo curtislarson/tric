@@ -34,6 +34,7 @@ public class MyApplication extends Application
 	{
 		Intent intent = new Intent(this,CollectionService.class);
 		bindService(intent,mConnection,Context.BIND_AUTO_CREATE);
+		//startService(new Intent(this,CollectionService.class));
 	}
 	
 	public void stopService()

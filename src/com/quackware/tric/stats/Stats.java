@@ -10,17 +10,10 @@ import android.preference.PreferenceManager;
 public abstract class Stats {
 	
 	//Data for every Stats object.
-	private String mName = "Stats";
 	private String mType = "Stats";
 	protected Object mData;
-	
-	//Preferences
-	//Ideally we should be reading these in from preferences
-	//In minutes (Default to 1 hour)
+
 	protected int mDefaultCollectionInterval = 60;
-	protected int mCollectionInterval;
-	protected boolean mShare = false;
-	protected boolean mCollect = true;
 	
 	public static ArrayList<String> mStatsNames = new ArrayList<String>();
 	
@@ -30,30 +23,19 @@ public abstract class Stats {
 		{
 			mStatsNames.add(pName);
 		}
-
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MyApplication.getInstance());
-		mCollectionInterval = prefs.getInt("edittext_collectinterval_" + pName, mDefaultCollectionInterval);
-		mShare = prefs.getBoolean("checkbox_share_" + pName, false);
-		mCollect = prefs.getBoolean("checkbox_collect_" + pName,true);
 	}
 	
 	public abstract void refreshStats();
 	
 	public abstract String getType();
 	
+	public abstract String getName();
+	
+	public abstract int getDefaultCollectionInterval();
+	
 	public Object getStats()
 	{
 		return mData;
-	}
-	
-	public String getName()
-	{
-		return mName;
-	}
-	
-	public int getDefaultCollectionInterval()
-	{
-		return mDefaultCollectionInterval;
 	}
 	
 	@Override
