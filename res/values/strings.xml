@@ -5,7 +5,7 @@
     <string name="pref_stats_title">tric Settings</string>
     <string name="phonestats_settings">Phone trics</string>
     <string name="socialstats_settings">Social trics</string>
-    <string name="appstats_settings">Application Specific Settings</string>
+    <string name="appstats_settings">Application Specific trics</string>
     <string name="pref_share_title">Share trics</string>
     <string name="pref_share_summary">Choose to periodically share this tric with everyone</string>
     <string name="pref_collect_title">Collect this tric</string>

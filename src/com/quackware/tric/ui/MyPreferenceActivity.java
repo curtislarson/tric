@@ -22,6 +22,7 @@ public class MyPreferenceActivity extends PreferenceActivity implements OnShared
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
+		addPreferencesFromResource(R.xml.prefs);
 		buildPreferenceActivity();
 	}
 	
