@@ -72,7 +72,7 @@ public class CollectionService extends Service {
 				if(a.mStats.equals(s))
 				{
 					mHandler.removeCallbacks(a);
-					mRunnableList.remove(a);
+					it.remove();
 				}
 			}
 		}
@@ -97,10 +97,13 @@ public class CollectionService extends Service {
 		//Add check to see if we should actually launch based on preferences for collecting.
 		for(Stats s : pStats)
 		{
-			ArgRunnable a = new ArgRunnable(s);
-			mHandler.post(a);
-			//mHandler.postDelayed(a, s.getCollectionInterval()*1000*60);
-			mRunnableList.add(a);
+			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MyApplication.getInstance());
+			if(prefs.getBoolean("checkbox_collect_" + s.getName(), true))
+			{
+				ArgRunnable a = new ArgRunnable(s);
+				mHandler.post(a);
+				mRunnableList.add(a);
+			}
 		}
 	}
 
@@ -116,7 +119,7 @@ public class CollectionService extends Service {
 			mStats.refreshStats();
 			mDatabaseHelper.insertNewStat(mStats);
 			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MyApplication.getInstance());
-			int collectionInterval = prefs.getInt("edittext_collectinterval_" + mStats.getName(), mStats.getDefaultCollectionInterval());
+			int collectionInterval = Integer.parseInt(prefs.getString("edittext_collectinterval_" + mStats.getName(), "" + mStats.getDefaultCollectionInterval()));
 			mHandler.postDelayed(this,collectionInterval*1000*60);
 		}
 		
