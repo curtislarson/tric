@@ -2,10 +2,13 @@ package com.quackware.tric.ui;
 
 import com.quackware.tric.MyApplication;
 import com.quackware.tric.R;
-import com.quackware.tric.R.layout;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 
 public class MainActivity extends Activity {
 	
@@ -14,6 +17,8 @@ public class MainActivity extends Activity {
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+		
+		setupButtonListeners();
 	}
 	
 	@Override
@@ -22,6 +27,17 @@ public class MainActivity extends Activity {
 		super.onDestroy();
 		//Should this be here?
 		MyApplication.getInstance().stopService();
+	}
+	
+	private void setupButtonListeners()
+	{
+		((Button)findViewById(R.id.prefs)).setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(MainActivity.this,MyPreferenceActivity.class);
+				startActivity(intent);
+			}});
 	}
 
 }
