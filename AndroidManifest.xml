@@ -29,6 +29,9 @@
         <activity
             android:name=".ui.TricCategoryDetailActivity">
         </activity>
+        <activity
+            android:name=".ui.TricDetailActivity">
+        </activity>
 
         <service android:name=".service.CollectionService" >
         </service>

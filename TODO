@@ -1,16 +1,10 @@
 Create detail view in which we can pass it a tric and maybe a type for data and have it display the stat for the tric
 	- Also have a link to the preferences for the tric
 	- In the future have a chart view
-	- Have filter based on day/month/year/all time
-	- Select highest / lowest / average / median / stdev
+	- Have a button for force refersh
 	
-Going to have to create new DatabaseQuerys 
-	- Select highest
-	- Select lowest
-	- Select average
-	- Select Median
-	- Select standard deviation
-	- Be able to filter all the results based on timeframes
+Want a main name and detail name for each tric 
+
 	
 	
 Instead of highest/lowest/etc which returns 1 result we could also return the next highest etc results if they want.
