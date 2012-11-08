@@ -19,9 +19,9 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	private static final String TAG = "DatabaseHelper";
 	
 	private static final String DATABASE_NAME = "tricDB";
-	private static final int DATABASE_VERSION = 1;
+	private static final int DATABASE_VERSION = 2;
 	
-	private static final boolean rebuild = false;
+	private static final boolean rebuild = true;
 	
 	private static final String TABLE_CREATE_START = "CREATE TABLE IF NOT EXISTS ";
 	private static final String TABLE_CREATE_END = " (_id INTEGER PRIMARY KEY, DATA STRING, TIMESTAMP DATE);";
@@ -34,6 +34,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
+		//Add check for all database tables here.
 		for(int i = 0;i<Stats.mStatsNames.size();i++)
 		{
 			db.execSQL(TABLE_CREATE_START + Stats.mStatsNames.get(i) + TABLE_CREATE_END);
@@ -45,6 +46,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	{
 		if (oldVersion < DATABASE_VERSION && rebuild)
 		{
+			//In the future this should be changed to add new tables in instead of just dropping
 			this.dropTables(db);
 			onCreate(db);
 		}

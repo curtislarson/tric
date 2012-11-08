@@ -23,6 +23,12 @@
             android:name=".ui.MyPreferenceActivity"
             android:label="@string/preferences">
         </activity>
+        <activity
+            android:name=".ui.TricCategoryActivity">
+        </activity>
+        <activity
+            android:name=".ui.TricCategoryDetailActivity">
+        </activity>
 
         <service android:name=".service.CollectionService" >
         </service>

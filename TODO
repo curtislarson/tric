@@ -17,3 +17,9 @@ Instead of highest/lowest/etc which returns 1 result we could also return the ne
 
 
 Add IP for upload to server.
+
+
+FOR DESIGN:
+
+Have it themed like "metrics" or "statistics" with some sort of graph representing the GUI
+- Initial main activity is static, have it load up like a sideways bar graph with different bright colors.

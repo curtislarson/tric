@@ -6,15 +6,22 @@
     <Button 
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:id="@+id/prefs"
-    android:text="Preferences">
+    android:id="@+id/cat_phonestats"
+    android:text="Phone trics">
     </Button>
     
     <Button 
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:id="@+id/viewtrics"
-    android:text="View trics">
+    android:id="@+id/cat_socialstats"
+    android:text="Social trics">
+    </Button>
+    
+        <Button 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/cat_appstats"
+    android:text="App trics">
     </Button>
 
 </LinearLayout>

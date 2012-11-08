@@ -6,6 +6,9 @@ import java.util.Iterator;
 import com.quackware.tric.MyApplication;
 import com.quackware.tric.database.DatabaseHelper;
 import com.quackware.tric.stats.Stats;
+import com.quackware.tric.stats.AppStats.NumberOfDownloadedAppsInstalled;
+import com.quackware.tric.stats.AppStats.NumberOfTotalAppsInstalled;
+import com.quackware.tric.stats.AppStats.NumberOfTotalAppsUninstalled;
 import com.quackware.tric.stats.PhoneStats.*;
 
 import android.app.Service;
@@ -88,8 +91,12 @@ public class CollectionService extends Service {
 	{
 		TotalPhoneUptime tpu = new TotalPhoneUptime();
 		TotalPhoneUptimeNoSleep tpuns = new TotalPhoneUptimeNoSleep();
-		launch(tpu,tpuns);
-		MyApplication.addStats(tpu,tpuns);
+		NumberOfDownloadedAppsInstalled d = new NumberOfDownloadedAppsInstalled();
+		NumberOfTotalAppsInstalled totalApps = new NumberOfTotalAppsInstalled();
+		NumberOfTotalAppsUninstalled u = new NumberOfTotalAppsUninstalled();
+		
+		launch(tpu,tpuns,d,totalApps,u);
+		MyApplication.addStats(tpu,tpuns,d,totalApps,u);
 	}
 	
 	private void launch(Stats...pStats)
