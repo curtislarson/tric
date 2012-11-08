@@ -39,7 +39,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		{
 			db.execSQL(TABLE_CREATE_START + Stats.mStatsNames.get(i) + TABLE_CREATE_END);
 		}
-		db.close();
 	}
 
 	@Override
@@ -152,6 +151,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		values.put("TIMESTAMP",dateFormat.format(date));
 		
 		db.insert(pStats.getName(), null, values);
+		
 		db.close();
 	}
 	
@@ -161,7 +161,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		{
 			db.execSQL(TABLE_DROP + Stats.mStatsNames.get(i));
 		}
-		db.close();
 	}
 	
 	public class StatData
