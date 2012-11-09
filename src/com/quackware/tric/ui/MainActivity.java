@@ -20,6 +20,9 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.main);
 		
 		setupButtonListeners();
+		
+		//Check if we actually have any that need facebook authorization.
+		MyApplication.authorizeFacebook(this);
 	}
 	
 	@Override

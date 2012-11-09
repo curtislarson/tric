@@ -38,9 +38,6 @@ public class CollectionService extends Service {
 	
 	private final IBinder mBinder = new CollectionBinder();
 	
-	private Facebook mFacebook;
-	private AsyncFacebookRunner mAsyncRunner;
-	
 	@Override
 	public void onCreate()
 	{
@@ -48,9 +45,6 @@ public class CollectionService extends Service {
 		mHandler = new Handler();
 		mDatabaseHelper = new DatabaseHelper(this);
 		mRunnableList = new ArrayList<ArgRunnable>();
-		
-		mFacebook = new Facebook(FacebookStats.FACEBOOK_APP_ID);
-		mAsyncRunner = new AsyncFacebookRunner(mFacebook);
 	}
 	
 	@Override
@@ -117,7 +111,7 @@ public class CollectionService extends Service {
 		//END APP STATS
 		
 		//BEGIN SOCIAL STATS
-		NumberOfFacebookFriends fbFriends = new NumberOfFacebookFriends(mAsyncRunner);
+		NumberOfFacebookFriends fbFriends = new NumberOfFacebookFriends(MyApplication.getFacebookRunner());
 		//END SOCIAL STATS
 		
 		launch(tpu,tpuns,d,totalApps,u,fbFriends);
@@ -139,67 +133,6 @@ public class CollectionService extends Service {
 		}
 	}
 	
-	public void authorizeFacebook(Activity pCallingActivity) {
-		final SharedPreferences mPrefs = PreferenceManager
-				.getDefaultSharedPreferences(MyApplication.getInstance());
-		String access_token = mPrefs.getString("access_token", null);
-		long expires = mPrefs.getLong("access_expires", 0);
-		if (access_token != null) {
-			mFacebook.setAccessToken(access_token);
-		}
-		if (expires != 0) {
-			mFacebook.setAccessExpires(expires);
-		}
-		if (!mFacebook.isSessionValid()) 
-		{
-			mFacebook.authorize(pCallingActivity,
-					FacebookStats.FACEBOOK_PERMISSIONS, new DialogListener() {
-
-						@Override
-						public void onComplete(Bundle values) {
-							SharedPreferences.Editor editor = mPrefs.edit();
-							editor.putString("access_token",
-									mFacebook.getAccessToken());
-							editor.putLong("access_expires",
-									mFacebook.getAccessExpires());
-							editor.commit();
-						}
-
-						@Override
-						public void onFacebookError(FacebookError e) {
-							// TODO Auto-generated method stub
-
-						}
-
-						@Override
-						public void onError(DialogError e) {
-							// TODO Auto-generated method stub
-
-						}
-
-						@Override
-						public void onCancel() {
-							// TODO Auto-generated method stub
-
-						}
-					});
-		}
-		
-		//Refresh collection after login.
-		for(int i = 0;i<MyApplication.getStats().size();i++)
-		{
-			if(MyApplication.getStats().get(i).getType().equals("FacebookStats"))
-			{
-				launch(MyApplication.getStats().get(i));
-			}
-		}
-	}
-
-	public Facebook getFacebook()
-	{
-		return mFacebook;
-	}
-	
 	class ArgRunnable implements Runnable
 	{
 		private Stats mStats;
@@ -209,10 +142,10 @@ public class CollectionService extends Service {
 		}
 		public void run() 
 		{
-			if(mStats.getType().equals("FacebookStats") && mFacebook != null)
+			if(mStats.getType().equals("FacebookStats") && MyApplication.getFacebook() != null)
 			{
-				mFacebook.extendAccessTokenIfNeeded(MyApplication.getInstance(), null);
-				if(!mFacebook.isSessionValid())
+				MyApplication.getFacebook().extendAccessTokenIfNeeded(MyApplication.getInstance(), null);
+				if(!MyApplication.getFacebook().isSessionValid())
 				{
 					Toast.makeText(getApplicationContext(), "Not logged into Facebook, not collecting info",Toast.LENGTH_LONG).show();
 					mHandler.postDelayed(this,mStats.getDefaultCollectionInterval()*1000*60);

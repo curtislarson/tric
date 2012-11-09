@@ -56,7 +56,7 @@ public class MyPreferenceActivity extends PreferenceActivity implements OnShared
 		super.onActivityResult(requestCode, resultCode, data);
 		if(MyApplication.getService() != null)
 		{
-			Facebook f = MyApplication.getService().getFacebook();
+			Facebook f = MyApplication.getFacebook();
 			f.authorizeCallback(requestCode, resultCode, data);
 		}
 	}
@@ -154,9 +154,9 @@ public class MyPreferenceActivity extends PreferenceActivity implements OnShared
 	public boolean onPreferenceClick(Preference pref) {
 		if(pref.getKey().equals("facebook_auth"))
 		{
-			if(MyApplication.getService() != null)
+			if(MyApplication.getFacebook() != null)
 			{
-				MyApplication.getService().authorizeFacebook(this);
+				MyApplication.authorizeFacebook(this);
 			}
 		}
 		return true;

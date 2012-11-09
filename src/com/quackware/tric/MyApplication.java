@@ -2,16 +2,26 @@ package com.quackware.tric;
 
 import java.util.ArrayList;
 
+import com.facebook.android.AsyncFacebookRunner;
+import com.facebook.android.DialogError;
+import com.facebook.android.Facebook;
+import com.facebook.android.FacebookError;
+import com.facebook.android.Facebook.DialogListener;
 import com.quackware.tric.service.CollectionService;
 import com.quackware.tric.service.CollectionService.CollectionBinder;
 import com.quackware.tric.stats.Stats;
+import com.quackware.tric.stats.SocialStats.FacebookStats;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 
 public class MyApplication extends Application
 {
@@ -22,6 +32,9 @@ public class MyApplication extends Application
 	private static CollectionService mService;
 	private static boolean mBound = false;
 	
+	private static Facebook mFacebook;
+	private static AsyncFacebookRunner mAsyncRunner;
+	
 	
 	//Going to need to extend facebook auth token here potentially (or in the tric category detail activity)
 	@Override
@@ -29,7 +42,67 @@ public class MyApplication extends Application
 	{
 		super.onCreate();
 		instance = this;
+		
+		mFacebook = new Facebook(FacebookStats.FACEBOOK_APP_ID);
+		mAsyncRunner = new AsyncFacebookRunner(mFacebook);
+		
 		startService();
+	}
+	
+	public static void authorizeFacebook(Activity pCallingActivity) {
+		final SharedPreferences mPrefs = PreferenceManager
+				.getDefaultSharedPreferences(MyApplication.getInstance());
+		String access_token = mPrefs.getString("access_token", null);
+		long expires = mPrefs.getLong("access_expires", 0);
+		if (access_token != null) {
+			mFacebook.setAccessToken(access_token);
+		}
+		if (expires != 0) {
+			mFacebook.setAccessExpires(expires);
+		}
+		if (!mFacebook.isSessionValid()) 
+		{
+			mFacebook.authorize(pCallingActivity,
+					FacebookStats.FACEBOOK_PERMISSIONS, new DialogListener() {
+
+						@Override
+						public void onComplete(Bundle values) {
+							SharedPreferences.Editor editor = mPrefs.edit();
+							editor.putString("access_token",
+									mFacebook.getAccessToken());
+							editor.putLong("access_expires",
+									mFacebook.getAccessExpires());
+							editor.commit();
+						}
+
+						@Override
+						public void onFacebookError(FacebookError e) {
+							// TODO Auto-generated method stub
+
+						}
+
+						@Override
+						public void onError(DialogError e) {
+							// TODO Auto-generated method stub
+
+						}
+
+						@Override
+						public void onCancel() {
+							// TODO Auto-generated method stub
+
+						}
+					});
+		}
+		
+		//Refresh collection after login.
+		for(int i = 0;i<mGlobalStatsList.size();i++)
+		{
+			if(mGlobalStatsList.get(i).getType().equals("FacebookStats"))
+			{
+				getService().refreshStatsInfo(mGlobalStatsList.get(i));
+			}
+		}
 	}
 	
 	private void startService()
@@ -64,6 +137,16 @@ public class MyApplication extends Application
 		}
 		
 	};
+	
+	public static Facebook getFacebook()
+	{
+		return mFacebook;
+	}
+	
+	public static AsyncFacebookRunner getFacebookRunner()
+	{
+		return mAsyncRunner;
+	}
 	
 	public static CollectionService getService()
 	{

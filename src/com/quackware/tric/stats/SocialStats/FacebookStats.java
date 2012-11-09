@@ -1,5 +1,7 @@
 package com.quackware.tric.stats.SocialStats;
 
+import android.app.Activity;
+
 
 public abstract class FacebookStats extends SocialStats{
 
@@ -17,6 +19,12 @@ public abstract class FacebookStats extends SocialStats{
 	@Override
 	public String getType() {
 		return mType;
+	}
+	
+	
+	public static void authorizeFacebook(Activity pCallingActivity)
+	{
+		
 	}
 
 }
