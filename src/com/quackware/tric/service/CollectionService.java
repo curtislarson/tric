@@ -16,6 +16,7 @@ import com.quackware.tric.stats.AppStats.NumberOfTotalAppsInstalled;
 import com.quackware.tric.stats.AppStats.NumberOfTotalAppsUninstalled;
 import com.quackware.tric.stats.PhoneStats.*;
 import com.quackware.tric.stats.SocialStats.FacebookStats;
+import com.quackware.tric.stats.SocialStats.NumberOfFacebookFriends;
 
 import android.app.Activity;
 import android.app.Service;
@@ -26,6 +27,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
+import android.widget.Toast;
 
 public class CollectionService extends Service {
 
@@ -103,14 +105,23 @@ public class CollectionService extends Service {
 	
 	public void beginCollection()
 	{
+		//BEGIN PHONE STATS
 		TotalPhoneUptime tpu = new TotalPhoneUptime();
 		TotalPhoneUptimeNoSleep tpuns = new TotalPhoneUptimeNoSleep();
+		//END PHONE STATS
+		
+		//BEGIN APP STATS
 		NumberOfDownloadedAppsInstalled d = new NumberOfDownloadedAppsInstalled();
 		NumberOfTotalAppsInstalled totalApps = new NumberOfTotalAppsInstalled();
 		NumberOfTotalAppsUninstalled u = new NumberOfTotalAppsUninstalled();
+		//END APP STATS
 		
-		launch(tpu,tpuns,d,totalApps,u);
-		MyApplication.addStats(tpu,tpuns,d,totalApps,u);
+		//BEGIN SOCIAL STATS
+		NumberOfFacebookFriends fbFriends = new NumberOfFacebookFriends(mAsyncRunner);
+		//END SOCIAL STATS
+		
+		launch(tpu,tpuns,d,totalApps,u,fbFriends);
+		MyApplication.addStats(tpu,tpuns,d,totalApps,u,fbFriends);
 	}
 	
 	private void launch(Stats...pStats)
@@ -173,6 +184,15 @@ public class CollectionService extends Service {
 						}
 					});
 		}
+		
+		//Refresh collection after login.
+		for(int i = 0;i<MyApplication.getStats().size();i++)
+		{
+			if(MyApplication.getStats().get(i).getType().equals("FacebookStats"))
+			{
+				launch(MyApplication.getStats().get(i));
+			}
+		}
 	}
 
 	public Facebook getFacebook()
@@ -189,8 +209,21 @@ public class CollectionService extends Service {
 		}
 		public void run() 
 		{
-			mStats.refreshStats();
-			mDatabaseHelper.insertNewStat(mStats);
+			if(mStats.getType().equals("FacebookStats") && mFacebook != null)
+			{
+				mFacebook.extendAccessTokenIfNeeded(MyApplication.getInstance(), null);
+				if(!mFacebook.isSessionValid())
+				{
+					Toast.makeText(getApplicationContext(), "Not logged into Facebook, not collecting info",Toast.LENGTH_LONG).show();
+					mHandler.postDelayed(this,mStats.getDefaultCollectionInterval()*1000*60);
+					return;
+				}
+			}
+			if(!mStats.refreshStats())
+			{
+				//Not asynchronous, we can go ahead and insert now.
+				mDatabaseHelper.insertNewStat(mStats);
+			}
 			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MyApplication.getInstance());
 			int collectionInterval = Integer.parseInt(prefs.getString("edittext_collectinterval_" + mStats.getName(), "" + mStats.getDefaultCollectionInterval()));
 			mHandler.postDelayed(this,collectionInterval*1000*60);

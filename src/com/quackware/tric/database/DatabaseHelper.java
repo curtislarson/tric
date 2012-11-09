@@ -19,7 +19,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	private static final String TAG = "DatabaseHelper";
 	
 	private static final String DATABASE_NAME = "tricDB";
-	private static final int DATABASE_VERSION = 2;
+	private static final int DATABASE_VERSION = 5;
 	
 	private static final boolean rebuild = true;
 	

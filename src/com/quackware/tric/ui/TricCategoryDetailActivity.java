@@ -34,7 +34,7 @@ public class TricCategoryDetailActivity extends Activity implements OnClickListe
 		LinearLayout ll = (LinearLayout)findViewById(R.id.catdetail_ll);
 		for(Stats s : MyApplication.getStats())
 		{
-			if(s.getType().equals(category))
+			if(s.getType().equals(category) || (s.getType().equals("FacebookStats") && category.equals("SocialStats")))
 			{
 				Button b = new Button(this);
 				b.setText(s.getName());
