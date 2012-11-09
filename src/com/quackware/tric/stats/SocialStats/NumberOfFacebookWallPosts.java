@@ -10,21 +10,20 @@ import org.json.JSONObject;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.facebook.android.AsyncFacebookRunner;
-import com.facebook.android.AsyncFacebookRunner.RequestListener;
 import com.facebook.android.FacebookError;
 import com.facebook.android.Util;
+import com.facebook.android.AsyncFacebookRunner.RequestListener;
 import com.quackware.tric.MyApplication;
 import com.quackware.tric.database.DatabaseHelper;
 
-public class NumberOfFacebookFriends extends FacebookStats{
+public class NumberOfFacebookWallPosts extends FacebookStats{
 
-	private static final String TAG = "NumberOfFacebookFriends";
+	private static final String TAG = "NumberOfFacebookWallPosts";
 	
-	private static String mName = "NumberOfFacebookFriends";
+	private static String mName = "NumberOfFacebookWallPosts";
 	private static int mDefaultCollectionInterval = 60*12;
-
-	public NumberOfFacebookFriends() {
+	
+	public NumberOfFacebookWallPosts() {
 		super(mName);
 	}
 
@@ -34,7 +33,7 @@ public class NumberOfFacebookFriends extends FacebookStats{
 		{
 			Bundle params = new Bundle();
 			params.putString("method", "fql.query");
-			params.putString("query", "SELECT friend_count FROM user WHERE uid = me()");
+			params.putString("query", "SELECT wall_count FROM user WHERE uid = me()");
 			MyApplication.getFacebookRunner().request(params, mRequestListener);
 		}
 		catch(Exception ex)
@@ -56,6 +55,7 @@ public class NumberOfFacebookFriends extends FacebookStats{
 		return mDefaultCollectionInterval;
 	}
 	
+
 	private RequestListener mRequestListener = new RequestListener()
 	{
 
@@ -69,7 +69,7 @@ public class NumberOfFacebookFriends extends FacebookStats{
 				mData = (Integer)arr.get(0);
 				//Insert into db.
 				DatabaseHelper helper = new DatabaseHelper(MyApplication.getInstance());
-				helper.insertNewStat(NumberOfFacebookFriends.this);
+				helper.insertNewStat(NumberOfFacebookWallPosts.this);
 			}
 			catch(Exception ex)
 			{

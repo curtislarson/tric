@@ -19,9 +19,9 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	private static final String TAG = "DatabaseHelper";
 	
 	private static final String DATABASE_NAME = "tricDB";
-	private static final int DATABASE_VERSION = 5;
+	private static final int DATABASE_VERSION = 1;
 	
-	private static final boolean rebuild = true;
+	private static final boolean rebuild = false;
 	
 	private static final String TABLE_CREATE_START = "CREATE TABLE IF NOT EXISTS ";
 	private static final String TABLE_CREATE_END = " (_id INTEGER PRIMARY KEY, DATA STRING, TIMESTAMP DATE);";

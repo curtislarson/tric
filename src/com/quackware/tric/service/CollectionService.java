@@ -17,6 +17,7 @@ import com.quackware.tric.stats.AppStats.NumberOfTotalAppsUninstalled;
 import com.quackware.tric.stats.PhoneStats.*;
 import com.quackware.tric.stats.SocialStats.FacebookStats;
 import com.quackware.tric.stats.SocialStats.NumberOfFacebookFriends;
+import com.quackware.tric.stats.SocialStats.NumberOfFacebookWallPosts;
 
 import android.app.Activity;
 import android.app.Service;
@@ -111,11 +112,12 @@ public class CollectionService extends Service {
 		//END APP STATS
 		
 		//BEGIN SOCIAL STATS
-		NumberOfFacebookFriends fbFriends = new NumberOfFacebookFriends(MyApplication.getFacebookRunner());
+		NumberOfFacebookFriends fbFriends = new NumberOfFacebookFriends();
+		NumberOfFacebookWallPosts fbWallPosts = new NumberOfFacebookWallPosts();
 		//END SOCIAL STATS
 		
-		launch(tpu,tpuns,d,totalApps,u,fbFriends);
-		MyApplication.addStats(tpu,tpuns,d,totalApps,u,fbFriends);
+		launch(tpu,tpuns,d,totalApps,u,fbFriends,fbWallPosts);
+		MyApplication.addStats(tpu,tpuns,d,totalApps,u,fbFriends,fbWallPosts,fbWallPosts);
 	}
 	
 	private void launch(Stats...pStats)
