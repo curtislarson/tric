@@ -32,7 +32,7 @@ public class NumberOfDownloadedAppsInstalled extends AppStats {
 	}
 
 	@Override
-	public void refreshStats() {
+	public boolean refreshStats() {
 		final PackageManager pm = MyApplication.getInstance().getPackageManager();
 		int count = 0;
 		List<PackageInfo> packages = pm.getInstalledPackages(0);
@@ -44,6 +44,7 @@ public class NumberOfDownloadedAppsInstalled extends AppStats {
 			}
 		}
 		mData = (Integer)count;
+		return false;
 	}
 
 	private boolean isSystemPackage(PackageInfo pkgInfo) {

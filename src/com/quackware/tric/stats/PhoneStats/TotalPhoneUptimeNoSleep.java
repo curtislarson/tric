@@ -25,9 +25,10 @@ public class TotalPhoneUptimeNoSleep extends PhoneStats{
 	}
 	
 	@Override
-	public void refreshStats() {
+	public boolean refreshStats() {
 		Long returnL = SystemClock.uptimeMillis();
 		mData = returnL;
+		return false;
 	}
 
 }

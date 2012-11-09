@@ -26,9 +26,10 @@ public class NumberOfTotalAppsUninstalled extends AppStats {
 	}
 
 	@Override
-	public void refreshStats() {
+	public boolean refreshStats() {
 		final PackageManager pm = MyApplication.getInstance().getPackageManager();
 		mData = pm.getInstalledPackages(PackageManager.GET_UNINSTALLED_PACKAGES).size() - pm.getInstalledPackages(0).size();
+		return fakse;
 	}
 
 }

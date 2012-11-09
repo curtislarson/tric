@@ -25,9 +25,10 @@ public class TotalPhoneUptime extends PhoneStats{
 	}
 
 	@Override
-	public void refreshStats() {
+	public boolean refreshStats() {
 		Long returnL = SystemClock.elapsedRealtime();
 		mData = returnL;
+		return false;
 	}
 
 }

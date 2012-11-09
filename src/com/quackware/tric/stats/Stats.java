@@ -25,7 +25,11 @@ public abstract class Stats {
 		}
 	}
 	
-	public abstract void refreshStats();
+	/**
+	 * Refreshes the internal data of the stats object.
+	 * @return A boolean indicating whether or not the refresh was asynchronous.
+	 */
+	public abstract boolean refreshStats();
 	
 	public abstract String getType();
 	

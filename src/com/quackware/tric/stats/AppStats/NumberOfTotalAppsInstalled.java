@@ -29,10 +29,11 @@ public class NumberOfTotalAppsInstalled extends AppStats {
 	}
 
 	@Override
-	public void refreshStats() {
+	public boolean refreshStats() {
 		final PackageManager pm = MyApplication.getInstance().getPackageManager();
 		List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
 		mData = (Integer)packages.size();
+		return false;
 	}
 
 }
