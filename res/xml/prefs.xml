@@ -3,6 +3,9 @@
     <PreferenceCategory
         android:title="@string/pref_tric_title"
         android:key="pref_key_tric_settings">
+     <Preference android:title="@string/facebook_auth"
+         android:key="facebook_auth"
+         ></Preference>
     </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/pref_stats_title"

@@ -2,28 +2,45 @@ package com.quackware.tric.ui;
 
 import java.util.ArrayList;
 
+import com.facebook.android.AsyncFacebookRunner;
+import com.facebook.android.DialogError;
+import com.facebook.android.Facebook;
+import com.facebook.android.Facebook.DialogListener;
+import com.facebook.android.FacebookError;
 import com.quackware.tric.MyApplication;
 import com.quackware.tric.R;
 import com.quackware.tric.service.CollectionService;
 import com.quackware.tric.stats.Stats;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
+import android.preference.Preference;
+import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
 import android.text.InputType;
 
-public class MyPreferenceActivity extends PreferenceActivity implements OnSharedPreferenceChangeListener {
+public class MyPreferenceActivity extends PreferenceActivity implements OnSharedPreferenceChangeListener, OnPreferenceClickListener {
+	
+	private static final String FACEBOOK_APP_ID = "407653559195";
+	private static final String[] FACEBOOK_PERMISSIONS = new String[] {"read_friendlists","read_stream","read_requests"};
+	
+	private SharedPreferences mPrefs;
+	private Facebook mFacebook;
+	private AsyncFacebookRunner mAsyncRunner;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.prefs);
+		
 		buildPreferenceActivity();
+		setPreferenceClickListeners();
 	}
 	
 	@Override
@@ -38,6 +55,19 @@ public class MyPreferenceActivity extends PreferenceActivity implements OnShared
 	{
 		super.onPause();
 		getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
+	}
+	
+	@Override
+	public void onActivityResult(int requestCode,int resultCode,Intent data)
+	{
+		super.onActivityResult(requestCode, resultCode, data);
+		mFacebook.authorizeCallback(requestCode, resultCode, data);
+	}
+	
+	private void setPreferenceClickListeners()
+	{
+		Preference facebookPref = (Preference)findPreference("auth_facebook");
+		facebookPref.setOnPreferenceClickListener(this);
 	}
 	
 	//The general structure of preferences will remain the same, however we do need to populate it based on the Stats collection.
@@ -121,6 +151,58 @@ public class MyPreferenceActivity extends PreferenceActivity implements OnShared
 			String statsName = key.replace("edittext_collectinterval_", "");
 			service.refreshStatsInfo(MyApplication.getStatsByName(statsName));
 		}
+	}
+
+	@Override
+	public boolean onPreferenceClick(Preference pref) {
+		if(pref.getKey().equals("auth_facebook"))
+		{
+			mFacebook = new Facebook(FACEBOOK_APP_ID);
+			mAsyncRunner = new AsyncFacebookRunner(mFacebook);
+			
+			mPrefs = getPreferences(MODE_PRIVATE);
+			String access_token = mPrefs.getString("access_token", null);
+			long expires = mPrefs.getLong("access_expires", 0);
+			if(access_token != null)
+			{
+				mFacebook.setAccessToken(access_token);
+			}
+			if(expires != 0)
+			{
+				mFacebook.setAccessExpires(expires);
+			}
+			if(!mFacebook.isSessionValid())
+			{
+			mFacebook.authorize(this, FACEBOOK_PERMISSIONS, new DialogListener(){
+
+				@Override
+				public void onComplete(Bundle values) {
+					SharedPreferences.Editor editor = mPrefs.edit();
+					editor.putString("access_token",mFacebook.getAccessToken());
+					editor.putLong("access_expires",mFacebook.getAccessExpires());
+					editor.commit();
+				}
+
+				@Override
+				public void onFacebookError(FacebookError e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void onError(DialogError e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void onCancel() {
+					// TODO Auto-generated method stub
+					
+				}});
+			}
+		}
+		return true;
 	}
 
 }
