@@ -26,13 +26,6 @@ import android.text.InputType;
 
 public class MyPreferenceActivity extends PreferenceActivity implements OnSharedPreferenceChangeListener, OnPreferenceClickListener {
 	
-	private static final String FACEBOOK_APP_ID = "407653559195";
-	private static final String[] FACEBOOK_PERMISSIONS = new String[] {"read_friendlists","read_stream","read_requests"};
-	
-	private SharedPreferences mPrefs;
-	private Facebook mFacebook;
-	private AsyncFacebookRunner mAsyncRunner;
-	
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
@@ -61,12 +54,16 @@ public class MyPreferenceActivity extends PreferenceActivity implements OnShared
 	public void onActivityResult(int requestCode,int resultCode,Intent data)
 	{
 		super.onActivityResult(requestCode, resultCode, data);
-		mFacebook.authorizeCallback(requestCode, resultCode, data);
+		if(MyApplication.getService() != null)
+		{
+			Facebook f = MyApplication.getService().getFacebook();
+			f.authorizeCallback(requestCode, resultCode, data);
+		}
 	}
 	
 	private void setPreferenceClickListeners()
 	{
-		Preference facebookPref = (Preference)findPreference("auth_facebook");
+		Preference facebookPref = (Preference)findPreference("facebook_auth");
 		facebookPref.setOnPreferenceClickListener(this);
 	}
 	
@@ -155,51 +152,11 @@ public class MyPreferenceActivity extends PreferenceActivity implements OnShared
 
 	@Override
 	public boolean onPreferenceClick(Preference pref) {
-		if(pref.getKey().equals("auth_facebook"))
+		if(pref.getKey().equals("facebook_auth"))
 		{
-			mFacebook = new Facebook(FACEBOOK_APP_ID);
-			mAsyncRunner = new AsyncFacebookRunner(mFacebook);
-			
-			mPrefs = getPreferences(MODE_PRIVATE);
-			String access_token = mPrefs.getString("access_token", null);
-			long expires = mPrefs.getLong("access_expires", 0);
-			if(access_token != null)
+			if(MyApplication.getService() != null)
 			{
-				mFacebook.setAccessToken(access_token);
-			}
-			if(expires != 0)
-			{
-				mFacebook.setAccessExpires(expires);
-			}
-			if(!mFacebook.isSessionValid())
-			{
-			mFacebook.authorize(this, FACEBOOK_PERMISSIONS, new DialogListener(){
-
-				@Override
-				public void onComplete(Bundle values) {
-					SharedPreferences.Editor editor = mPrefs.edit();
-					editor.putString("access_token",mFacebook.getAccessToken());
-					editor.putLong("access_expires",mFacebook.getAccessExpires());
-					editor.commit();
-				}
-
-				@Override
-				public void onFacebookError(FacebookError e) {
-					// TODO Auto-generated method stub
-					
-				}
-
-				@Override
-				public void onError(DialogError e) {
-					// TODO Auto-generated method stub
-					
-				}
-
-				@Override
-				public void onCancel() {
-					// TODO Auto-generated method stub
-					
-				}});
+				MyApplication.getService().authorizeFacebook(this);
 			}
 		}
 		return true;

@@ -6,6 +6,9 @@ public class FacebookStats extends SocialStats{
 	private static String mName = "FacebookStats";
 	private static int mDefaultCollectionInterval = 60;
 	
+	
+	public static final String FACEBOOK_APP_ID = "407653559195";
+	public static final String[] FACEBOOK_PERMISSIONS = new String[] {"read_friendlists","read_stream","read_requests"};
 
 	
 	public FacebookStats(String pName) {

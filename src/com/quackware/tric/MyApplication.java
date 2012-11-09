@@ -22,6 +22,8 @@ public class MyApplication extends Application
 	private static CollectionService mService;
 	private static boolean mBound = false;
 	
+	
+	//Going to need to extend facebook auth token here potentially (or in the tric category detail activity)
 	@Override
 	public void onCreate()
 	{
