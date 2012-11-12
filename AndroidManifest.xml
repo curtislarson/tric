@@ -32,11 +32,20 @@
         <activity
             android:name=".ui.TricDetailActivity">
         </activity>
-
         <service android:name=".service.CollectionService" >
         </service>
+        
+        <receiver
+            android:name=".service.StartupIntentReceiver"
+            android:enabled="true"
+            android:exported="true"
+            android:label="StartupIntentReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"></action>
+            </intent-filter>
+        </receiver>
     </application>
-    
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.INTERNET"/>
 
 </manifest>

@@ -34,7 +34,7 @@ public class MainActivity extends Activity {
 	{
 		super.onDestroy();
 		//Should this be here?
-		MyApplication.getInstance().stopService();
+		//MyApplication.getInstance().stopService();
 	}
 	
 	private void setupButtonListeners()
