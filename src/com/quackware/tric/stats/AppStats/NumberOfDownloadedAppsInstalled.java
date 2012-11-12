@@ -7,6 +7,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
 import com.quackware.tric.MyApplication;
+import com.quackware.tric.stats.Stats.DataType;
 
 public class NumberOfDownloadedAppsInstalled extends AppStats {
 
@@ -50,5 +51,10 @@ public class NumberOfDownloadedAppsInstalled extends AppStats {
 	private boolean isSystemPackage(PackageInfo pkgInfo) {
 	    return ((pkgInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0) ? true
 	            : false;
+	}
+	
+	@Override
+	public DataType getDataType() {
+		return DataType.NUMBER;
 	}
 }

@@ -106,4 +106,9 @@ public class NumberOfFacebookFriends extends FacebookStats{
 		
 	};
 
+	@Override
+	public DataType getDataType() {
+		return DataType.NUMBER;
+	}
+
 }

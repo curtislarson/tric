@@ -15,6 +15,7 @@ import com.facebook.android.Util;
 import com.facebook.android.AsyncFacebookRunner.RequestListener;
 import com.quackware.tric.MyApplication;
 import com.quackware.tric.database.DatabaseHelper;
+import com.quackware.tric.stats.Stats.DataType;
 
 public class NumberOfFacebookWallPosts extends FacebookStats{
 
@@ -105,5 +106,10 @@ public class NumberOfFacebookWallPosts extends FacebookStats{
 		}
 		
 	};
+	
+	@Override
+	public DataType getDataType() {
+		return DataType.NUMBER;
+	}
 
 }

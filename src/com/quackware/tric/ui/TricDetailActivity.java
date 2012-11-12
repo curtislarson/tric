@@ -1,12 +1,15 @@
 package com.quackware.tric.ui;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import com.quackware.tric.R;
 import com.quackware.tric.database.DatabaseHelper;
-import com.quackware.tric.database.DatabaseHelper.StatData;
 import com.quackware.tric.database.SelectType.StatType;
 import com.quackware.tric.database.SelectType.TimeFrame;
+import com.quackware.tric.database.StatData;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -33,7 +36,21 @@ public class TricDetailActivity extends Activity {
 		for(int i = 0;i<statData.size();i++)
 		{
 			TextView tv = new TextView(this);
-			tv.setText("Data: " + statData.get(i).mData + "\nTimestamp: " + statData.get(i).mTimestamp);
+			switch(statData.get(i).mDataType)
+			{
+			case TIME:
+				Date d = new Date(Long.parseLong(statData.get(i).mData));
+				DateFormat f = new SimpleDateFormat("HH:mm:ss");
+				String formatedDate = f.format(d);
+				tv.setText("Data: " + formatedDate + "\nTimestamp: " + statData.get(i).mTimestamp);
+				break;
+			case STRING:
+			case NUMBER:
+			default:
+				tv.setText("Data: " + statData.get(i).mData + "\nTimestamp: " + statData.get(i).mTimestamp);
+				break;
+			}
+			
 			ll.addView(tv);
 		}
 	}

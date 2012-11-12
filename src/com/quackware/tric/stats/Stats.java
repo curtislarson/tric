@@ -37,6 +37,8 @@ public abstract class Stats {
 	
 	public abstract int getDefaultCollectionInterval();
 	
+	public abstract DataType getDataType();
+	
 	public Object getStats()
 	{
 		return mData;
@@ -53,5 +55,13 @@ public abstract class Stats {
 		}
 		return false;
 	}
+	
+	
+	public enum DataType
+	{
+		STRING,
+		TIME,
+		NUMBER
+	};
 
 }

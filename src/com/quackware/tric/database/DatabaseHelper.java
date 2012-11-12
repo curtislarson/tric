@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import com.quackware.tric.MyApplication;
 import com.quackware.tric.database.SelectType.StatType;
 import com.quackware.tric.database.SelectType.TimeFrame;
 import com.quackware.tric.stats.Stats;
@@ -76,6 +77,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		StatData sd = new StatData();
 		sd.mData = data;
 		sd.mTimestamp = dateTime;
+		sd.mDataType = MyApplication.getStatsByName(pName).getDataType();
 		sdList.add(sd);
 		return sdList;
 	}
@@ -161,12 +163,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		{
 			db.execSQL(TABLE_DROP + Stats.mStatsNames.get(i));
 		}
-	}
-	
-	public class StatData
-	{
-		public String mData;
-		public String mTimestamp;
 	}
 
 }

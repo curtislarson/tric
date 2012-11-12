@@ -1,5 +1,7 @@
 package com.quackware.tric.stats.PhoneStats;
 
+import com.quackware.tric.stats.Stats.DataType;
+
 import android.os.SystemClock;
 
 public class TotalPhoneUptime extends PhoneStats{
@@ -31,4 +33,8 @@ public class TotalPhoneUptime extends PhoneStats{
 		return false;
 	}
 
+	@Override
+	public DataType getDataType() {
+		return DataType.TIME;
+	}
 }

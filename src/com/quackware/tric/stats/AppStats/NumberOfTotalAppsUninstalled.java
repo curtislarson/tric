@@ -3,6 +3,7 @@ package com.quackware.tric.stats.AppStats;
 import android.content.pm.PackageManager;
 
 import com.quackware.tric.MyApplication;
+import com.quackware.tric.stats.Stats.DataType;
 
 public class NumberOfTotalAppsUninstalled extends AppStats {
 	
@@ -30,6 +31,11 @@ public class NumberOfTotalAppsUninstalled extends AppStats {
 		final PackageManager pm = MyApplication.getInstance().getPackageManager();
 		mData = pm.getInstalledPackages(PackageManager.GET_UNINSTALLED_PACKAGES).size() - pm.getInstalledPackages(0).size();
 		return false;
+	}
+	
+	@Override
+	public DataType getDataType() {
+		return DataType.NUMBER;
 	}
 
 }
