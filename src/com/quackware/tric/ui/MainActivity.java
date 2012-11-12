@@ -51,5 +51,12 @@ public class MainActivity extends Activity {
 				startActivity(intent);
 			}});
 	}
+	
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data)
+	{
+		super.onActivityResult(requestCode, resultCode, data);
+	    MyApplication.getFacebook().authorizeCallback(requestCode, resultCode, data);
+	}
 
 }
