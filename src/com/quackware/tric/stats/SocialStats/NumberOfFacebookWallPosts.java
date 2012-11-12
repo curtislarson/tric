@@ -64,9 +64,9 @@ public class NumberOfFacebookWallPosts extends FacebookStats{
 			Log.i(TAG,response);
 			try
 			{
-				JSONObject obj = Util.parseJson(response);
-				JSONArray arr = obj.getJSONArray("data");
-				mData = (Integer)arr.get(0);
+				JSONArray arr = new JSONArray(response);
+				JSONObject o = (JSONObject)arr.get(0);
+				mData = (Integer)o.get("wall_count");
 				//Insert into db.
 				DatabaseHelper helper = new DatabaseHelper(MyApplication.getInstance());
 				helper.insertNewStat(NumberOfFacebookWallPosts.this);
