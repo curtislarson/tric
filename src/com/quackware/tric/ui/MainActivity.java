@@ -21,8 +21,12 @@ public class MainActivity extends Activity {
 		
 		setupButtonListeners();
 		
-		//Check if we actually have any that need facebook authorization.
-		MyApplication.authorizeFacebook(this);
+		//Authorize, returns false if we are already authorized.
+		if(!MyApplication.authorizeFacebook(this))
+		{
+			//Just go ahead and refresh the token.
+			MyApplication.refreshFacebookToken();
+		}
 	}
 	
 	@Override

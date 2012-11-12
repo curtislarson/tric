@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.facebook.android.AsyncFacebookRunner;
 import com.facebook.android.DialogError;
 import com.facebook.android.Facebook;
+import com.facebook.android.Facebook.ServiceListener;
 import com.facebook.android.FacebookError;
 import com.facebook.android.Facebook.DialogListener;
 import com.quackware.tric.service.CollectionService;
@@ -22,9 +23,13 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 public class MyApplication extends Application
 {
+	
+	private static final String TAG = "MyApplication";
+	
 	private static MyApplication instance;
 	//Holds a list of Stats that have ever been instantiated
 	private static ArrayList<Stats> mGlobalStatsList = new ArrayList<Stats>();
@@ -49,7 +54,12 @@ public class MyApplication extends Application
 		startService();
 	}
 	
-	public static void authorizeFacebook(Activity pCallingActivity) {
+	/**
+	 * Attempts to authorize with Facebook using the provided Activity.
+	 * @param pCallingActivity The activity to return to upon authorization.
+	 * @return a boolean indicating whether or not we needed to authorize.
+	 */
+	public static boolean authorizeFacebook(Activity pCallingActivity) {
 		final SharedPreferences mPrefs = PreferenceManager
 				.getDefaultSharedPreferences(MyApplication.getInstance());
 		String access_token = mPrefs.getString("access_token", null);
@@ -73,17 +83,26 @@ public class MyApplication extends Application
 							editor.putLong("access_expires",
 									mFacebook.getAccessExpires());
 							editor.commit();
+							
+							
+							//Refresh collection after login.
+							for(int i = 0;i<mGlobalStatsList.size();i++)
+							{
+								if(mGlobalStatsList.get(i).getType().equals("FacebookStats"))
+								{
+									getService().refreshStatsInfo(mGlobalStatsList.get(i));
+								}
+							}
 						}
 
 						@Override
 						public void onFacebookError(FacebookError e) {
-							// TODO Auto-generated method stub
-
+							Log.e(TAG,e.getMessage());
 						}
 
 						@Override
 						public void onError(DialogError e) {
-							// TODO Auto-generated method stub
+							Log.e(TAG,e.getMessage());
 
 						}
 
@@ -93,15 +112,44 @@ public class MyApplication extends Application
 
 						}
 					});
+			return true;
 		}
-		
-		//Refresh collection after login.
-		for(int i = 0;i<mGlobalStatsList.size();i++)
+		else
 		{
-			if(mGlobalStatsList.get(i).getType().equals("FacebookStats"))
-			{
-				getService().refreshStatsInfo(mGlobalStatsList.get(i));
-			}
+			return false;
+		}
+
+	}
+	
+	public static void refreshFacebookToken()
+	{
+		if(mFacebook != null)
+		{
+			mFacebook.extendAccessToken(getInstance(), new ServiceListener(){
+
+				@Override
+				public void onComplete(Bundle values) {
+					final SharedPreferences mPrefs = PreferenceManager
+							.getDefaultSharedPreferences(MyApplication.getInstance());
+					SharedPreferences.Editor editor = mPrefs.edit();
+					editor.putString("access_token",
+							mFacebook.getAccessToken());
+					editor.putLong("access_expires",
+							mFacebook.getAccessExpires());
+					editor.commit();
+				}
+
+				@Override
+				public void onFacebookError(FacebookError e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void onError(Error e) {
+					// TODO Auto-generated method stub
+					
+				}});
 		}
 	}
 	
