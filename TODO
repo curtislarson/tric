@@ -1,16 +1,23 @@
+What do you want in the initial release?
+
+In version 1 of the initial release I want an app that records a decent amount of statistics for the various categories. 
+These statistics should be viewable by the user both in real time when they open up the tric detail and a history of the previously recorded times.
+There should be several different graph options of being able to see the features and doing things like sort by highest, lowest, get the average.
+
+The user should be able to set which tric they want to monitor and which ones they do not.
+
+I really want it to look good. Interface is key in the first version
+
 Create detail view in which we can pass it a tric and maybe a type for data and have it display the stat for the tric
 	- Also have a link to the preferences for the tric
 	- In the future have a chart view
 	- Have a button for force refersh
-	
-Want a main name and detail name for each tric 
 
-	
-	
-Instead of highest/lowest/etc which returns 1 result we could also return the next highest etc results if they want.
+-Add more trics
 
+-Rework tric/stats naming system
 
-Add IP for upload to server.
+Add IP or identification for upload to server.
 
 
 FOR DESIGN:
