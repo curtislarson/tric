@@ -32,7 +32,7 @@ public class TricDetailActivity extends Activity {
 	{
 		LinearLayout ll = (LinearLayout)findViewById(R.id.tricdetail_ll);
 		DatabaseHelper db = new DatabaseHelper(this);
-		ArrayList<StatData> statData = db.selectStats(tricName, StatType.HIGHEST, TimeFrame.ALLTIME);
+		ArrayList<StatData> statData = db.selectStats(tricName, StatType.HIGHEST, TimeFrame.ALLTIME,20);
 		for(int i = 0;i<statData.size();i++)
 		{
 			TextView tv = new TextView(this);

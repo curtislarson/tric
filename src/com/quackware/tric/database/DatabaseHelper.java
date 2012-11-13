@@ -8,6 +8,7 @@ import com.quackware.tric.MyApplication;
 import com.quackware.tric.database.SelectType.StatType;
 import com.quackware.tric.database.SelectType.TimeFrame;
 import com.quackware.tric.stats.Stats;
+import com.quackware.tric.stats.Stats.DataType;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -53,10 +54,16 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		}
 	}
 	
-	public ArrayList<StatData> selectStats(String pName,StatType pType, TimeFrame pTimeFrame)
+	public ArrayList<StatData> selectSignificantStat(String pName, StatType pType,TimeFrame pTimeFrame)
+	{
+		return this.selectStats(pName, pType, pTimeFrame,1);
+	}
+	
+	public ArrayList<StatData> selectStats(String pName,StatType pType, TimeFrame pTimeFrame, int limit)
 	{
 		SQLiteDatabase db = getWritableDatabase();
-		String dataFilter = getDataTypeFilter(pType);
+		String orderBy = getOrderBy(pType);
+		String dataFilter = getDataFilter(pType);
 		String selection = getTimeFrameFilter(pTimeFrame);
 
 		Cursor c = db.query(
@@ -66,21 +73,29 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 				null,
 				null,
 				null,
-				"DATA DESC");
+				orderBy,
+				"" + limit);
 		
-		c.moveToFirst();
-		String data = c.getString(0);
-		String dateTime = c.getString(1);
+		ArrayList<StatData> sdList = new ArrayList<StatData>();
+		boolean notEmpty = c.moveToFirst();
+		DataType type = MyApplication.getStatsByName(pName).getDataType();
+		while(notEmpty)
+		{
+			String data = c.getString(0);
+			String dateTime = c.getString(1);
+			StatData sd = new StatData();
+			sd.mData = data;
+			sd.mTimestamp = dateTime;
+			sd.mDataType = type;
+			sdList.add(sd);
+			notEmpty = c.moveToNext();
+		}
 		c.close();
 		db.close();
-		ArrayList<StatData> sdList = new ArrayList<StatData>();
-		StatData sd = new StatData();
-		sd.mData = data;
-		sd.mTimestamp = dateTime;
-		sd.mDataType = MyApplication.getStatsByName(pName).getDataType();
-		sdList.add(sd);
+
 		return sdList;
 	}
+	
 	
 	private String getTimeFrameFilter(TimeFrame pTimeFrame)
 	{
@@ -110,7 +125,30 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		return selection;
 	}
 	
-	private String getDataTypeFilter(StatType pType)
+	private String getDataFilter(StatType pType)
+	{
+		String dataFilter = null;
+		if(pType != null)
+		{
+			switch(pType)
+			{
+
+			case AVERAGE:
+				dataFilter = "AVG(DATA)";
+				break;
+			case MEDIAN:
+			case STDEV:
+			case HIGHEST:
+			case LOWEST:
+			default:
+				dataFilter = "DATA";
+				break;
+			}
+		}
+		return dataFilter;
+	}
+	
+	private String getOrderBy(StatType pType)
 	{
 		String dataFilter = null;
 		if(pType != null)
@@ -118,25 +156,16 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			switch(pType)
 			{
 			case HIGHEST:
-				dataFilter = "MAX(DATA)";
+				dataFilter = "DATA DESC";
 				break;
 			case LOWEST:
-				dataFilter = "MIN(DATA)";
+				dataFilter = "DATA ASC";
 				break;
 			case AVERAGE:
-				dataFilter = "AVG(DATA)";
-				break;
 			case MEDIAN:
-				//change later
-				dataFilter = "DATA";
-				break;
 			case STDEV:
-				//change later
-				dataFilter = "DATA";
-				break;
 			default:
-				dataFilter = "DATA";
-				break;
+				return null;
 			}
 		}
 		return dataFilter;
