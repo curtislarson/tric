@@ -38,8 +38,9 @@ public class TricDetailActivity extends Activity {
 		
 		GraphFragment frag = new GraphFragment(tricName,statData);
 		FragmentTransaction trans = getFragmentManager().beginTransaction();
-		trans.add(R.id.tricdetail_ll, frag).commit();
+		trans.add(R.id.tricdetail_maplayout, frag).commit();
 		
+		((TextView)findViewById(R.id.tricdetail_trictitle_tv)).setText(tricName);
 		for(int i = 0;i<statData.size();i++)
 		{
 			TextView tv = new TextView(this);
