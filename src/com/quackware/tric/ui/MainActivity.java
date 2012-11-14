@@ -7,6 +7,7 @@ import com.quackware.tric.ui.widget.PieChart.OnCurrentItemChangedListener;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 
 public class MainActivity extends Activity {
@@ -38,6 +39,9 @@ public class MainActivity extends Activity {
 	private void setupPieListeners()
 	{
 		PieChart pc = (PieChart)findViewById(R.id.piechart);
+        Resources res = getResources();
+        pc.addItem("Local trics",4,res.getColor(R.color.standard_blue));
+        pc.addItem("Preferences",1,res.getColor(R.color.standard_green));
 		pc.setOnCurrentItemChangedListener(new OnCurrentItemChangedListener(){
 
 			@Override

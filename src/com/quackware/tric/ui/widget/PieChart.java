@@ -744,9 +744,6 @@ public class PieChart extends ViewGroup {
             addItem("Dahlia", 3, res.getColor(R.color.seafoam));
             addItem("Ekaterina", 1, res.getColor(R.color.slate));
         }*/
-        Resources res = getResources();
-        addItem("Local trics",4,res.getColor(R.color.standard_blue));
-        addItem("Preferences",1,res.getColor(R.color.standard_green));
 
     }
 
