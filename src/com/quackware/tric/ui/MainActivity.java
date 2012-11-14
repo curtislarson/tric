@@ -3,7 +3,7 @@ package com.quackware.tric.ui;
 import com.quackware.tric.MyApplication;
 import com.quackware.tric.R;
 import com.quackware.tric.ui.widget.PieChart;
-import com.quackware.tric.ui.widget.PieChart.OnCurrentItemChangedListener;
+import com.quackware.tric.ui.widget.PieChart.OnSliceSelectedListener;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -42,11 +42,11 @@ public class MainActivity extends Activity {
         Resources res = getResources();
         pc.addItem("Local trics",4,res.getColor(R.color.standard_blue));
         pc.addItem("Preferences",1,res.getColor(R.color.standard_green));
-		pc.setOnCurrentItemChangedListener(new OnCurrentItemChangedListener(){
+        pc.setOnSliceSelectedListener(new OnSliceSelectedListener(){
 
 			@Override
-			public void OnCurrentItemChanged(PieChart source, int currentItem) {
-				switch(currentItem)
+			public void OnSliceSelected(PieChart source, int selectedSlice) {
+				switch(selectedSlice)
 				{
 				//Local
 				case 0:

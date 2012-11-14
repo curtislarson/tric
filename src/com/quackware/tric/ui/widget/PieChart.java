@@ -23,6 +23,7 @@ import android.content.res.TypedArray;
 import android.graphics.*;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.*;
 import android.widget.Scroller;
 
@@ -66,6 +67,7 @@ public class PieChart extends ViewGroup {
     private int mPieRotation;
 
     private OnCurrentItemChangedListener mCurrentItemChangedListener = null;
+    private OnSliceSelectedListener mSliceSelectedListener = null;
 
     private int mTextColor;
     private PieView mPieView;
@@ -110,6 +112,11 @@ public class PieChart extends ViewGroup {
      */
     public interface OnCurrentItemChangedListener {
         void OnCurrentItemChanged(PieChart source, int currentItem);
+    }
+    
+    public interface OnSliceSelectedListener
+    {
+    	void OnSliceSelected(PieChart source, int selectedSlice);
     }
 
     /**
@@ -400,6 +407,11 @@ public class PieChart extends ViewGroup {
     public void setOnCurrentItemChangedListener(OnCurrentItemChangedListener listener) {
         mCurrentItemChangedListener = listener;
     }
+    
+    public void setOnSliceSelectedListener(OnSliceSelectedListener listener)
+    {
+    	mSliceSelectedListener = listener;
+    }
 
     /**
      * Add a new data item to this view. Adding an item adds a slice to the pie whose
@@ -437,20 +449,49 @@ public class PieChart extends ViewGroup {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+    	
+    	if(event.getAction() == MotionEvent.ACTION_UP)
+    	{
+    		float x = event.getX();
+    		float y = event.getY();
+    		
+    		float relX = x - (mPieBounds.right - mPieBounds.left) * 0.5f;
+    		float relY = y - (mPieBounds.bottom - mPieBounds.top) * 0.5f;
+    		relY = -relY;
+    		float angleRad = (float)Math.atan2(relY, relX);
+    		
+    		int degree = (int)((angleRad + Math.PI) * 180 / Math.PI);
+    		degree = (degree + 180) % 360;
+    		for(int i = 0;i<mData.size();i++)
+    		{
+    			Item item = mData.get(i);
+    			if(degree > item.mStartAngle && degree < item.mEndAngle)
+    			{
+    				mSliceSelectedListener.OnSliceSelected(this, i);
+    				return true;
+    			}
+    		}
+    		return true;
+    	}
+    	else
+    	{
+    		return true;
+    	}
+    	
         // Let the GestureDetector interpret this event
-        boolean result = mDetector.onTouchEvent(event);
+        //boolean result = mDetector.onTouchEvent(event);
 
         // If the GestureDetector doesn't want this event, do some custom processing.
         // This code just tries to detect when the user is done scrolling by looking
         // for ACTION_UP events.
-        if (!result) {
+        /*if (!result) {
             if (event.getAction() == MotionEvent.ACTION_UP) {
                 // User is done scrolling, it's now safe to do things like autocenter
                 stopScrolling();
                 result = true;
             }
         }
-        return result;
+        return result;*/
     }
 
 
@@ -739,10 +780,7 @@ public class PieChart extends ViewGroup {
         /*if (this.isInEditMode()) {
             Resources res = getResources();
             addItem("Blue", 3, res.getColor(R.color.standard_blue));
-            addItem("Brunhilde", 4, res.getColor(R.color.chartreuse));
-            addItem("Carolina", 2, res.getColor(R.color.emerald));
-            addItem("Dahlia", 3, res.getColor(R.color.seafoam));
-            addItem("Ekaterina", 1, res.getColor(R.color.slate));
+            addItem("Preferences",1,res.getColor(R.color.standard_green));
         }*/
 
     }

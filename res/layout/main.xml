@@ -4,26 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-
-    <Button
-        android:id="@+id/prefs"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Preferences" >
-    </Button>
-
-    <Button
-        android:id="@+id/viewtrics"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="View trics" >
-    </Button>
-
+    
     <com.quackware.tric.ui.widget.PieChart
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         pie:labelPosition="left"
         pie:showText="true" 
+        pie:labelHeight="2dp"
+        pie:labelWidth="2dp"
         android:id="@+id/piechart"/>
 
 </LinearLayout>
