@@ -4,18 +4,18 @@ import java.util.ArrayList;
 
 import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
-import org.achartengine.chart.BarChart.Type;
+import org.achartengine.chart.PointStyle;
 import org.achartengine.model.CategorySeries;
 import org.achartengine.model.XYMultipleSeriesDataset;
 import org.achartengine.renderer.SimpleSeriesRenderer;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYMultipleSeriesRenderer.Orientation;
+import org.achartengine.renderer.XYSeriesRenderer;
 
 import com.quackware.tric.R;
 import com.quackware.tric.database.StatData;
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.app.Fragment;
 import android.graphics.Color;
 import android.graphics.Paint.Align;
@@ -26,7 +26,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 
 public class GraphFragment extends Fragment{
 	
@@ -48,11 +48,11 @@ public class GraphFragment extends Fragment{
 	{
 		View v = inflator.inflate(R.layout.graph_fragment, container,false);
 		final GraphicalView graphView = createGraphView();
-		RelativeLayout rl = (RelativeLayout)v.findViewById(R.id.graph_rel_layout);
+		LinearLayout ll = (LinearLayout)v.findViewById(R.id.graph_rel_layout);
 
 		graphView.setLayoutParams(buildGraphParams());
 		
-		rl.addView(graphView);
+		ll.addView(graphView);
 		return v;
 	}
 	
@@ -99,7 +99,7 @@ public class GraphFragment extends Fragment{
         	seriesRenderer.setDisplayChartValues(true);
         }
         
-        final GraphicalView grfv = ChartFactory.getBarChartView(this.getActivity(), buildBarDataset(), renderer, Type.DEFAULT);
+        final GraphicalView grfv = ChartFactory.getLineChartView(this.getActivity(), buildLineDataset(), renderer);
         return grfv;
 	}
 	
@@ -127,7 +127,7 @@ public class GraphFragment extends Fragment{
           renderer.setXAxisMin(xMin);
           renderer.setXAxisMax(xMax);
           renderer.setYAxisMin(yMin);
-          renderer.setYAxisMax(yMax);
+          renderer.setYAxisMax(yMax + (yMax / 5));
           renderer.setMargins(new int[] { 10, 65, 20, 65 });
           renderer.setAxesColor(axesColor);
           renderer.setLabelsColor(labelsColor);
@@ -138,7 +138,7 @@ public class GraphFragment extends Fragment{
           
         }
 	
-	protected XYMultipleSeriesDataset buildBarDataset() {
+	protected XYMultipleSeriesDataset buildLineDataset() {
         XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
         CategorySeries series = new CategorySeries(mName);
         for(int i = 0;i<mData.size();i++)
@@ -156,7 +156,7 @@ public class GraphFragment extends Fragment{
         renderer.setChartTitleTextSize(20);
         renderer.setLabelsTextSize(15);
         renderer.setLegendTextSize(15);
-        renderer.setBarSpacing(1);
+        //renderer.setBarSpacing(1);
          
         renderer.setMarginsColor(Color.parseColor("#EEEDED"));
         renderer.setXLabelsColor(Color.BLACK);
@@ -167,8 +167,9 @@ public class GraphFragment extends Fragment{
          
         int length = colors.length;
         for (int i = 0; i < length; i++) {
-          SimpleSeriesRenderer r = new SimpleSeriesRenderer();
+          XYSeriesRenderer r = new XYSeriesRenderer();
           r.setColor(colors[i]);
+          r.setPointStyle(PointStyle.CIRCLE);
           r.setChartValuesSpacing(15);
           renderer.addSeriesRenderer(r);
         }
