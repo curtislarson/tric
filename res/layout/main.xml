@@ -1,20 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:pie="http://schemas.android.com/apk/res/com.quackware.tric"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    <Button 
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/prefs"
-    android:text="Preferences">
+
+    <Button
+        android:id="@+id/prefs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Preferences" >
     </Button>
-    
-    <Button 
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/viewtrics"
-    android:text="View trics">
+
+    <Button
+        android:id="@+id/viewtrics"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="View trics" >
     </Button>
+
+    <com.quackware.tric.ui.widget.PieChart
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        pie:labelPosition="left"
+        pie:showText="true" 
+        android:id="@+id/piechart"/>
 
 </LinearLayout>

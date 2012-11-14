@@ -18,4 +18,7 @@
 
 <resources>
     <color name="pressed_tric">#CC33B5E5</color>
+    <color name="standard_blue">#449def</color>
+    <color name="standard_red">#ef4444</color>
+    <color name="standard_green">#70c656</color>
 </resources>

@@ -2,14 +2,12 @@ package com.quackware.tric.ui;
 
 import com.quackware.tric.MyApplication;
 import com.quackware.tric.R;
+import com.quackware.tric.ui.widget.PieChart;
+import com.quackware.tric.ui.widget.PieChart.OnCurrentItemChangedListener;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.animation.TranslateAnimation;
-import android.widget.Button;
 
 public class MainActivity extends Activity {
 	
@@ -18,8 +16,8 @@ public class MainActivity extends Activity {
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-		
-		setupButtonListeners();
+
+		setupPieListeners();
 		
 		//Authorize, returns false if we are already authorized.
 		if(!MyApplication.authorizeFacebook(this))
@@ -37,22 +35,27 @@ public class MainActivity extends Activity {
 		//MyApplication.getInstance().stopService();
 	}
 	
-	private void setupButtonListeners()
+	private void setupPieListeners()
 	{
-		((Button)findViewById(R.id.prefs)).setOnClickListener(new OnClickListener(){
+		PieChart pc = (PieChart)findViewById(R.id.piechart);
+		pc.setOnCurrentItemChangedListener(new OnCurrentItemChangedListener(){
 
 			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(MainActivity.this,MyPreferenceActivity.class);
-				startActivity(intent);
-			}});
-		
-		((Button)findViewById(R.id.viewtrics)).setOnClickListener(new OnClickListener(){
-
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(MainActivity.this,TricCategoryActivity.class);
-				startActivity(intent);
+			public void OnCurrentItemChanged(PieChart source, int currentItem) {
+				switch(currentItem)
+				{
+				//Local
+				case 0:
+					Intent intent = new Intent(MainActivity.this,TricCategoryActivity.class);
+					startActivity(intent);
+					break;
+				//Preferences
+				case 1:
+					Intent intent2 = new Intent(MainActivity.this,MyPreferenceActivity.class);
+					startActivity(intent2);
+					break;
+					
+				}
 			}});
 	}
 	
