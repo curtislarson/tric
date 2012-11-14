@@ -2,32 +2,48 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="horizontal"
+    android:paddingLeft="10dip" >
+
     <View
-        android:layout_width="fill_parent"
-        android:layout_height="2dp"
-        android:background="#000000">
-        
-    </View>
-    <Button 
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/cat_phonestats"
-    android:text="Phone trics">
-    </Button>
-    
-    <Button 
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/cat_socialstats"
-    android:text="Social trics">
-    </Button>
-    
-        <Button 
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/cat_appstats"
-    android:text="App trics">
-    </Button>
+        android:layout_width="2dip"
+        android:layout_height="fill_parent"
+        android:background="#000000" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="-4dip"
+        android:layout_marginTop="20dip"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/cat_phonestats"
+            style="@style/ButtonText"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/btn_blue"
+            android:text="Phone trics" >
+        </Button>
+
+        <Button
+            android:id="@+id/cat_socialstats"
+            style="@style/ButtonText"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_red"
+            android:text="Social trics" >
+        </Button>
+
+        <Button
+            android:id="@+id/cat_appstats"
+            style="@style/ButtonText"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_green"
+            android:text="App trics" >
+        </Button>
+    </LinearLayout>
 
 </LinearLayout>
