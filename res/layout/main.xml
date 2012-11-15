@@ -4,14 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    
+
     <com.quackware.tric.ui.widget.PieChart
-        android:layout_width="wrap_content"
+        android:id="@+id/piechart"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        pie:labelPosition="left"
-        pie:showText="true" 
-        pie:labelHeight="2dp"
-        pie:labelWidth="2dp"
-        android:id="@+id/piechart"/>
+        android:layout_weight="100"
+        android:background="@android:color/white"
+        android:padding="10dp"
+        pie:highlightStrength="1.12"
+        pie:labelColor="@android:color/black"
+        pie:pieRotation="0"
+        pie:showText="true" />
 
 </LinearLayout>
