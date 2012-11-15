@@ -74,7 +74,6 @@ public class PieChart extends ViewGroup {
     private Scroller mScroller;
     private ValueAnimator mScrollAnimator;
     private GestureDetector mDetector;
-    private PointerView mPointerView;
 
     // The angle at which we measure the current item. This is
     // where the pointer points.
@@ -511,7 +510,8 @@ public class PieChart extends ViewGroup {
 
         // Draw the label text
         if (getShowText()) {
-            canvas.drawText(mData.get(mCurrentItem).mLabel, mTextX, mTextY, mTextPaint);
+
+            
         }
 
         // If the API level is less than 11, we can't rely on the view animation system to
@@ -566,7 +566,7 @@ public class PieChart extends ViewGroup {
         float ypad = (float) (getPaddingTop() + getPaddingBottom());
 
         // Account for the label
-        if (mShowText) xpad += mTextWidth;
+        //if (mShowText) xpad += mTextWidth;
 
         float ww = (float) w - xpad;
         float hh = (float) h - ypad;
@@ -579,35 +579,6 @@ public class PieChart extends ViewGroup {
                 diameter,
                 diameter);
         mPieBounds.offsetTo(getPaddingLeft(), getPaddingTop());
-
-        mPointerY = mTextY - (mTextHeight / 2.0f);
-        float pointerOffset = mPieBounds.centerY() - mPointerY;
-
-        // Make adjustments based on text position
-        if (mTextPos == TEXTPOS_LEFT) {
-            mTextPaint.setTextAlign(Paint.Align.RIGHT);
-            if (mShowText) mPieBounds.offset(mTextWidth, 0.0f);
-            mTextX = mPieBounds.left;
-
-            if (pointerOffset < 0) {
-                pointerOffset = -pointerOffset;
-                mCurrentItemAngle = 225;
-            } else {
-                mCurrentItemAngle = 135;
-            }
-            mPointerX = mPieBounds.centerX() - pointerOffset;
-        } else {
-            mTextPaint.setTextAlign(Paint.Align.LEFT);
-            mTextX = mPieBounds.right;
-
-            if (pointerOffset < 0) {
-                pointerOffset = -pointerOffset;
-                mCurrentItemAngle = 315;
-            } else {
-                mCurrentItemAngle = 45;
-            }
-            mPointerX = mPieBounds.centerX() + pointerOffset;
-        }
 
         mShadowBounds = new RectF(
                 mPieBounds.left + 10,
@@ -622,7 +593,6 @@ public class PieChart extends ViewGroup {
                 (int) mPieBounds.bottom);
         mPieView.setPivot(mPieBounds.width() / 2, mPieBounds.height() / 2);
 
-        mPointerView.layout(0, 0, w, h);
         onDataChanged();
     }
 
@@ -719,11 +689,6 @@ public class PieChart extends ViewGroup {
         addView(mPieView);
         mPieView.rotateTo(mPieRotation);
 
-        // The pointer doesn't need hardware acceleration, but in order to show up
-        // in front of the pie it also needs to be on a separate view.
-        mPointerView = new PointerView(getContext());
-        addView(mPointerView);
-
         // Set up an animator to animate the PieRotation property. This is used to
         // correct the pie's orientation after the user lets go of it.
         if (Build.VERSION.SDK_INT >= 11) {
@@ -774,14 +739,6 @@ public class PieChart extends ViewGroup {
         // you can't scroll for a bit, pause, then scroll some more (the pause is interpreted
         // as a long press, apparently)
         mDetector.setIsLongpressEnabled(false);
-
-
-        // In edit mode it's nice to have some demo data, so add that here.
-        /*if (this.isInEditMode()) {
-            Resources res = getResources();
-            addItem("Blue", 3, res.getColor(R.color.standard_blue));
-            addItem("Preferences",1,res.getColor(R.color.standard_green));
-        }*/
 
     }
 
@@ -895,13 +852,25 @@ public class PieChart extends ViewGroup {
                 canvas.setMatrix(mTransform);
             }
 
-            for (Item it : mData) {
-                mPiePaint.setShader(it.mShader);
-                canvas.drawArc(mBounds,
-                        360 - it.mEndAngle,
-                        it.mEndAngle - it.mStartAngle,
-                        true, mPiePaint);
-            }
+			double radius = Math.abs(mPieBounds.centerX() - (mPieBounds.right - mPieBounds.left / 2));
+			mTextPaint.setTextSize(20.0f);
+			for (Item it : mData) {
+				mPiePaint.setShader(it.mShader);
+				canvas.drawArc(mBounds, 360 - it.mEndAngle, it.mEndAngle - it.mStartAngle, true, mPiePaint);
+				
+				float[] f = new float[it.mLabel.length()];
+				mTextPaint.getTextWidths(it.mLabel, f);
+				float totalLength = 0;
+				for (int j = 0; j < f.length; j++) {
+					totalLength += f[j];
+				}
+				double angle = 180 - (it.mStartAngle + (Math.abs(it.mEndAngle - it.mStartAngle) / 2.0));
+				int y = (int) (Math.sin(angle + (Math.PI / 180))* (radius / 2.0) + radius - (totalLength / 2.0));
+				angle = 360 - (it.mStartAngle + (Math.abs(it.mEndAngle - it.mStartAngle) / 2.0));
+				int x = (int) (Math.cos(angle * (Math.PI / 180)) * (radius / 2.0) + radius - (totalLength / 2.0));
+				canvas.drawText(it.mLabel, x, y, mTextPaint);
+
+			}
         }
 
         @Override
@@ -929,27 +898,6 @@ public class PieChart extends ViewGroup {
             } else {
                 invalidate();
             }
-        }
-    }
-
-    /**
-     * View that draws the pointer on top of the pie chart
-     */
-    private class PointerView extends View {
-
-        /**
-         * Construct a PointerView object
-         *
-         * @param context
-         */
-        public PointerView(Context context) {
-            super(context);
-        }
-
-        @Override
-        protected void onDraw(Canvas canvas) {
-            canvas.drawLine(mTextX, mPointerY, mPointerX, mPointerY, mTextPaint);
-            canvas.drawCircle(mPointerX, mPointerY, mPointerRadius, mTextPaint);
         }
     }
 

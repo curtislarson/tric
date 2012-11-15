@@ -15,6 +15,6 @@
         pie:highlightStrength="1.12"
         pie:labelColor="@android:color/black"
         pie:pieRotation="0"
-        pie:showText="true" />
+        pie:showText="true"/>
 
 </LinearLayout>
