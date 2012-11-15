@@ -21,4 +21,5 @@
     <color name="standard_blue">#449def</color>
     <color name="standard_red">#ef4444</color>
     <color name="standard_green">#70c656</color>
+    <color name="transparent">#80000000</color>
 </resources>

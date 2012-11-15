@@ -3,16 +3,21 @@
     xmlns:pie="http://schemas.android.com/apk/res/com.quackware.tric"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Choose an Option"
+        android:textColor="@android:color/black"
+        android:layout_gravity="center"/>
     <com.quackware.tric.ui.widget.PieChart
         android:id="@+id/piechart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="100"
-        android:background="@android:color/white"
         android:padding="10dp"
-        pie:highlightStrength="1.12"
+        pie:highlightStrength="1.3"
         pie:labelColor="@android:color/black"
         pie:pieRotation="0"
         pie:showText="true"/>

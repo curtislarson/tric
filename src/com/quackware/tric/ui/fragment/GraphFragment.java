@@ -120,7 +120,7 @@ public class GraphFragment extends Fragment{
 	protected void setChartSettings(XYMultipleSeriesRenderer renderer, String title, String xTitle,
             String yTitle, double xMin, double xMax, double yMin, double yMax, int axesColor,
             int labelsColor) {
-          renderer.setChartTitle(title);
+          //renderer.setChartTitle(title);
           renderer.setYLabelsAlign(Align.RIGHT);
           renderer.setXTitle(xTitle);
           renderer.setYTitle(yTitle);

@@ -1,16 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tricdetail_ll"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" 
-    android:id="@+id/tricdetail_ll">
+    android:orientation="vertical" >
 
-    <LinearLayout 
+    <LinearLayout
         android:id="@+id/tricdetail_maplayout"
         android:layout_width="wrap_content"
-    	android:layout_height="wrap_content">
+        android:layout_height="wrap_content" >
     </LinearLayout>
-    <TextView android:id="@+id/tricdetail_trictitle_tv"
+
+    <TextView
+        android:id="@+id/tricdetail_trictitle_tv"
         android:layout_width="wrap_content"
-    	android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal" >
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+    </LinearLayout>
+
 </LinearLayout>

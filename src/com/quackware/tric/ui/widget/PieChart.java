@@ -852,22 +852,19 @@ public class PieChart extends ViewGroup {
                 canvas.setMatrix(mTransform);
             }
 
-			double radius = Math.abs(mPieBounds.centerX() - (mPieBounds.right - mPieBounds.left / 2));
-			mTextPaint.setTextSize(20.0f);
+			double radius = (mPieBounds.right - mPieBounds.left) / 2.0;
+			
+			mTextPaint.setTextSize(30.0f);
 			for (Item it : mData) {
 				mPiePaint.setShader(it.mShader);
 				canvas.drawArc(mBounds, 360 - it.mEndAngle, it.mEndAngle - it.mStartAngle, true, mPiePaint);
 				
-				float[] f = new float[it.mLabel.length()];
-				mTextPaint.getTextWidths(it.mLabel, f);
-				float totalLength = 0;
-				for (int j = 0; j < f.length; j++) {
-					totalLength += f[j];
-				}
-				double angle = 180 - (it.mStartAngle + (Math.abs(it.mEndAngle - it.mStartAngle) / 2.0));
-				int y = (int) (Math.sin(angle + (Math.PI / 180))* (radius / 2.0) + radius - (totalLength / 2.0));
+				Rect bounds = new Rect();
+				mTextPaint.getTextBounds(it.mLabel, 0, it.mLabel.length(), bounds);
+				double angle = 360 - (it.mStartAngle + (Math.abs(it.mEndAngle - it.mStartAngle) / 2.0));
+				int y = (int) (Math.sin(angle * (Math.PI / 180))* (radius / 2.0) + radius + (bounds.bottom - bounds.top));
 				angle = 360 - (it.mStartAngle + (Math.abs(it.mEndAngle - it.mStartAngle) / 2.0));
-				int x = (int) (Math.cos(angle * (Math.PI / 180)) * (radius / 2.0) + radius - (totalLength / 2.0));
+				int x = (int) (Math.cos(angle * (Math.PI / 180)) * (radius / 2.0) + radius - (bounds.right - bounds.left)*.25);
 				canvas.drawText(it.mLabel, x, y, mTextPaint);
 
 			}
