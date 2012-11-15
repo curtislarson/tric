@@ -15,6 +15,9 @@ import com.quackware.tric.ui.fragment.GraphFragment;
 import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -28,8 +31,37 @@ public class TricDetailActivity extends Activity {
 		
 		String tricName = getIntent().getExtras().getString("tricName");
 		loadTric(tricName);
+		
+		setupButtonListeners();
 	}
 	
+	
+	private void setupButtonListeners()
+	{
+		((Button)findViewById(R.id.tricdetail_preferences_button)).setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				
+			}});
+		
+		((Button)findViewById(R.id.tricdetail_refresh_button)).setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				
+			}});
+		
+		((Button)findViewById(R.id.tricdetail_reset_button)).setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				
+			}});
+	}
 	private void loadTric(String tricName)
 	{
 		LinearLayout ll = (LinearLayout)findViewById(R.id.tricdetail_ll);

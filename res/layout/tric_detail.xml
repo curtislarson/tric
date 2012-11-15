@@ -21,12 +21,41 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal" >
-    </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical" >
+        <ListView
+            android:id="@+id/tricdetail_listivew"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <Button
+                android:id="@+id/tricdetail_refresh_button"
+                style="@style/ButtonText"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_black"
+                android:text="@string/refresh" />
+
+            <Button
+                android:id="@+id/tricdetail_reset_button"
+                style="@style/ButtonText"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_black"
+                android:text="@string/reset" />
+
+            <Button
+                android:id="@+id/tricdetail_preferences_button"
+                style="@style/ButtonText"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_black"
+                android:text="@string/preferences" />
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>
