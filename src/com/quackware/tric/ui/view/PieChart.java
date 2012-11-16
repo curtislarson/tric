@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.*;
+import android.graphics.Paint.Style;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -34,6 +35,7 @@ import java.lang.String;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.quackware.tric.MyApplication;
 import com.quackware.tric.R;
 
 /**
@@ -665,12 +667,14 @@ public class PieChart extends ViewGroup {
 
         // Set up the paint for the label text
         mTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mTextPaint.setTextSize(30);
         mTextPaint.setColor(mTextColor);
-        if (mTextHeight == 0) {
+        mTextPaint.setTypeface(Typeface.DEFAULT_BOLD);
+        /*if (mTextHeight == 0) {
             mTextHeight = mTextPaint.getTextSize();
         } else {
             mTextPaint.setTextSize(mTextHeight);
-        }
+        }*/
 
         // Set up the paint for the pie slices
         mPiePaint = new Paint(Paint.ANTI_ALIAS_FLAG);

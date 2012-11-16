@@ -22,7 +22,8 @@ Create detail view in which we can pass it a tric and maybe a type for data and 
 TO DO
 - Need a name in preferences to know which one we are editing.
 - Fix bug with chart when displaying more than screen size.
-- Add confirmation for reset.
+- Add some sort of push graphic for the pie
+- 
 
 Add IP or identification for upload to server.
 

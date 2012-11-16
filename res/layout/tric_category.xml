@@ -47,7 +47,7 @@
             style="@style/ButtonText"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/clickable_bar"
+            android:background="@drawable/clickable_bar_turq"
             android:text="@string/phone" />
 
         <View
@@ -64,7 +64,7 @@
                 style="@style/ButtonText"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/clickable_bar"
+                android:background="@drawable/clickable_bar_red"
                 android:text="@string/social" />
         </LinearLayout>
 
@@ -82,7 +82,7 @@
                 style="@style/ButtonText"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/clickable_bar"
+                android:background="@drawable/clickable_bar_orange"
                 android:text="@string/app" />
         </LinearLayout>
     </LinearLayout>
