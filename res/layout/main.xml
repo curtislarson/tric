@@ -3,7 +3,8 @@
     xmlns:pie="http://schemas.android.com/apk/res/com.quackware.tric"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/main_tan">
 
     <TextView
         android:layout_width="wrap_content"

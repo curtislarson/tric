@@ -41,8 +41,8 @@ public class MainActivity extends Activity {
 	{
 		PieChart pc = (PieChart)findViewById(R.id.piechart);
         Resources res = getResources();
-        pc.addItem("Local trics",4,res.getColor(R.color.standard_blue));
-        pc.addItem("Preferences",1,res.getColor(R.color.standard_green));
+        pc.addItem("Local trics",4,res.getColor(R.color.main_red));
+        pc.addItem("Preferences",1,res.getColor(R.color.main_turq));
         pc.setOnSliceSelectedListener(new OnSliceSelectedListener(){
 
 			@Override

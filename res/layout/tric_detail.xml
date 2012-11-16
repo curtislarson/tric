@@ -8,7 +8,8 @@
     <LinearLayout
         android:id="@+id/tricdetail_maplayout"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content" 
+        android:layout_gravity="center">
     </LinearLayout>
 
     <TextView
@@ -24,14 +25,15 @@
 
         <ListView
             android:id="@+id/tricdetail_listvew"
-            android:layout_width="wrap_content"
+            android:layout_width="0dip"
             android:layout_height="wrap_content" 
             android:layout_weight="1"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical" 
+            android:layout_gravity="right">
 
             <Button
                 android:id="@+id/tricdetail_refresh_button"
@@ -39,7 +41,8 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/btn_black"
-                android:text="@string/refresh" />
+                android:text="@string/refresh" 
+                android:padding="10dip"/>
 
             <Button
                 android:id="@+id/tricdetail_reset_button"
@@ -47,7 +50,8 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/btn_black"
-                android:text="@string/reset" />
+                android:text="@string/reset"
+                android:padding="10dip" />
 
             <Button
                 android:id="@+id/tricdetail_preferences_button"
@@ -55,7 +59,8 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/btn_black"
-                android:text="@string/preferences" />
+                android:text="@string/preferences" 
+                android:padding="10dip"/>
         </LinearLayout>
     </LinearLayout>
 

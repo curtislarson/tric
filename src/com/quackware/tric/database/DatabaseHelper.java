@@ -54,6 +54,13 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		}
 	}
 	
+	public void clearAllStats(String pName)
+	{
+		SQLiteDatabase db = getWritableDatabase();
+		db.delete(pName, null, null);
+		db.close();
+	}
+	
 	public ArrayList<StatData> selectSignificantStat(String pName, StatType pType,TimeFrame pTimeFrame)
 	{
 		return this.selectStats(pName, pType, pTimeFrame,1);

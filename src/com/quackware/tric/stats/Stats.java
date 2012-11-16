@@ -10,7 +10,6 @@ import android.preference.PreferenceManager;
 public abstract class Stats {
 	
 	//Data for every Stats object.
-	private String mType = "Stats";
 	protected Object mData;
 
 	protected int mDefaultCollectionInterval = 60;

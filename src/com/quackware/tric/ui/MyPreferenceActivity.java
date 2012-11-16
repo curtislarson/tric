@@ -34,6 +34,22 @@ public class MyPreferenceActivity extends PreferenceActivity implements OnShared
 		
 		buildPreferenceActivity();
 		setPreferenceClickListeners();
+		
+		//Check to see if we need to go to a sub preference screen.
+		if (getIntent().getExtras() != null)
+		{
+			String optionalTricName = getIntent().getExtras().getString("tricName");
+			if (optionalTricName != null)
+			{
+				// Find it and "click" it
+				Stats s = MyApplication.getStatsByName(optionalTricName);
+				PreferenceScreen parent = (PreferenceScreen) findPreference("button_"
+						+ s.getType().toLowerCase() + "_category_key");
+				int pos = findPreference("button_" + optionalTricName)
+						.getOrder();
+				parent.onItemClick(null, null, pos, 0);
+			}
+		}
 	}
 	
 	@Override

@@ -51,7 +51,6 @@ public class GraphFragment extends Fragment{
 		LinearLayout ll = (LinearLayout)v.findViewById(R.id.graph_rel_layout);
 
 		graphView.setLayoutParams(buildGraphParams());
-		
 		ll.addView(graphView);
 		return v;
 	}
@@ -88,9 +87,13 @@ public class GraphFragment extends Fragment{
         renderer.setXLabels(1);
         renderer.setYLabels(10);
         
-        renderer.addXTextLabel(1, mData.get(0).mTimestamp);
-        renderer.addXTextLabel((mData.size() / 2) + 1, mData.get(mData.size() / 2).mTimestamp);
-        renderer.addXTextLabel(mData.size(), mData.get(mData.size() - 1).mTimestamp);
+        if(mData.size() > 0)
+        {
+        	renderer.addXTextLabel(1, mData.get(0).mTimestamp);
+        	renderer.addXTextLabel((mData.size() / 2) + 1, mData.get(mData.size() / 2).mTimestamp);
+            renderer.addXTextLabel(mData.size(), mData.get(mData.size() - 1).mTimestamp);
+        }
+        
         
         int length = renderer.getSeriesRendererCount();
         for(int i = 0;i<length;i++)
