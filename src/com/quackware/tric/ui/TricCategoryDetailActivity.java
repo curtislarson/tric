@@ -6,6 +6,7 @@ import com.quackware.tric.stats.Stats;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -40,6 +41,8 @@ public class TricCategoryDetailActivity extends Activity implements OnClickListe
 				b.setText(s.getName());
 				b.setTag(s.getName());
 				b.setOnClickListener(this);
+				Drawable img = getResources().getDrawable(R.drawable.gnexus);
+				b.setCompoundDrawablesWithIntrinsicBounds(img, null,null,null);
 				ll.addView(b);
 			}
 		}
