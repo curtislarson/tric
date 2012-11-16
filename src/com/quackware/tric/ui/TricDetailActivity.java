@@ -15,7 +15,9 @@ import com.quackware.tric.ui.fragment.GraphFragment;
 import com.quackware.tric.ui.widget.StatDataAdapter;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -70,12 +72,26 @@ public class TricDetailActivity extends Activity {
 
 			@Override
 			public void onClick(View arg0) {
-				//Add confirmation.
-				DatabaseHelper db = new DatabaseHelper(TricDetailActivity.this);
-				db.clearAllStats(mTricName);
-				loadTric();
+				AlertDialog.Builder builder = new AlertDialog.Builder(TricDetailActivity.this);
+				// Add the buttons
+				builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+				           public void onClick(DialogInterface dialog, int id) {
+								DatabaseHelper db = new DatabaseHelper(TricDetailActivity.this);
+								db.clearAllStats(mTricName);
+								loadTric();
+				           }
+				       });
+				builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+				           public void onClick(DialogInterface dialog, int id) {
+				               // User cancelled the dialog
+				           }
+				       });
+				builder.setMessage(R.string.clear_stats_message).setTitle(R.string.dialog_warning);
+				AlertDialog dialog = builder.create();
+				dialog.show();
 			}});
 	}
+	
 	private void loadTric()
 	{
 		DatabaseHelper db = new DatabaseHelper(this);
