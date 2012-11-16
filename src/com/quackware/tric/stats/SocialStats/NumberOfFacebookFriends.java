@@ -68,7 +68,7 @@ public class NumberOfFacebookFriends extends FacebookStats{
 				JSONObject o = (JSONObject)arr.get(0);
 				mData = (Integer)o.get("friend_count");
 				//Insert into db.
-				DatabaseHelper helper = new DatabaseHelper(MyApplication.getInstance());
+				DatabaseHelper helper = MyApplication.getDatabaseHelper();
 				helper.insertNewStat(NumberOfFacebookFriends.this);
 			}
 			catch(Exception ex)

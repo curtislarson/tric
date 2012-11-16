@@ -8,6 +8,7 @@ import com.facebook.android.Facebook;
 import com.facebook.android.Facebook.ServiceListener;
 import com.facebook.android.FacebookError;
 import com.facebook.android.Facebook.DialogListener;
+import com.quackware.tric.database.DatabaseHelper;
 import com.quackware.tric.database.StatData;
 import com.quackware.tric.service.CollectionService;
 import com.quackware.tric.service.CollectionService.CollectionBinder;
@@ -36,6 +37,7 @@ public class MyApplication extends Application
 	private static ArrayList<Stats> mGlobalStatsList = new ArrayList<Stats>();
 	
 	private static CollectionService mService;
+	private static DatabaseHelper mDatabaseHelper;
 	private static boolean mBound = false;
 	
 	private static Facebook mFacebook;
@@ -48,7 +50,7 @@ public class MyApplication extends Application
 		instance = this;
 		mFacebook = new Facebook(FacebookStats.FACEBOOK_APP_ID);
 		mAsyncRunner = new AsyncFacebookRunner(mFacebook);
-		
+		mDatabaseHelper = new DatabaseHelper(this);
 		startService();
 	}
 	
@@ -183,6 +185,11 @@ public class MyApplication extends Application
 		}
 		
 	};
+	
+	public static DatabaseHelper getDatabaseHelper()
+	{
+		return mDatabaseHelper;
+	}
 	
 	public static Facebook getFacebook()
 	{

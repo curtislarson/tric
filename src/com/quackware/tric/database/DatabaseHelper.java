@@ -11,6 +11,9 @@ import com.quackware.tric.database.SelectType.StatType;
 import com.quackware.tric.database.SelectType.TimeFrame;
 import com.quackware.tric.stats.Stats;
 import com.quackware.tric.stats.Stats.DataType;
+import com.quackware.tric.ui.view.PieChart;
+import com.quackware.tric.ui.view.PieChart.OnCurrentItemChangedListener;
+import com.quackware.tric.ui.view.PieChart.OnSliceSelectedListener;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -32,6 +35,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	private static final String TABLE_CREATE_START = "CREATE TABLE IF NOT EXISTS ";
 	private static final String TABLE_CREATE_END = " (_id INTEGER PRIMARY KEY, DATA STRING, TIMESTAMP DATE);";
 	private static final String TABLE_DROP = "DROP TABLE IF EXISTS ";
+	
+	private OnNewItemInsertedListener mOnNewItemInserted = null;
 	
 	public DatabaseHelper(Context context)
 	{
@@ -204,11 +209,13 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		temp.mTimestamp = dateFormat.format(date);
 		temp.mDataType = pStats.getDataType();
 		temp.mName = pStats.getName();
-		mostRecent.add(temp.toString());
+		mostRecent.add(temp.toStringNoTimestamp());
 		
 		SharedPreferences.Editor editor = prefs.edit();
 		editor.putStringSet("mostRecentStats", mostRecent);
 		editor.commit();
+		
+		mOnNewItemInserted.OnNewItemInserted();
 		
 	}
 	
@@ -219,5 +226,15 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			db.execSQL(TABLE_DROP + Stats.mStatsNames.get(i));
 		}
 	}
+	
+	public interface OnNewItemInsertedListener
+    {
+    	void OnNewItemInserted();
+    }
+	
+	public void OnNewItemInsertedListener(OnNewItemInsertedListener listener)
+    {
+    	mOnNewItemInserted = listener;
+    }
 
 }

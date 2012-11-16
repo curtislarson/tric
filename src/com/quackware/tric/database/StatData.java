@@ -16,6 +16,12 @@ public class StatData {
 	public String mTimestamp;
 	public DataType mDataType;
 	
+	public String toStringNoTimestamp()
+	{
+		String toString = toString();
+		return toString.substring(0,toString.indexOf("Timestamp:") - 1);
+	}
+	
 	@Override
 	public String toString()
 	{

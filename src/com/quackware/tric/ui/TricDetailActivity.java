@@ -1,9 +1,6 @@
 package com.quackware.tric.ui;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import com.quackware.tric.MyApplication;
 import com.quackware.tric.R;
@@ -23,7 +20,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -76,8 +72,7 @@ public class TricDetailActivity extends Activity {
 				// Add the buttons
 				builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 				           public void onClick(DialogInterface dialog, int id) {
-								DatabaseHelper db = new DatabaseHelper(TricDetailActivity.this);
-								db.clearAllStats(mTricName);
+								MyApplication.getDatabaseHelper().clearAllStats(mTricName);
 								loadTric();
 				           }
 				       });
@@ -94,7 +89,7 @@ public class TricDetailActivity extends Activity {
 	
 	private void loadTric()
 	{
-		DatabaseHelper db = new DatabaseHelper(this);
+		DatabaseHelper db = MyApplication.getDatabaseHelper();
 		ArrayList<StatData> statData = db.selectStats(mTricName, StatType.HIGHEST, TimeFrame.ALLTIME,20);
 		
 		GraphFragment frag = new GraphFragment(mTricName,statData);

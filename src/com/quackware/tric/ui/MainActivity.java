@@ -4,6 +4,7 @@ import java.util.HashSet;
 
 import com.quackware.tric.MyApplication;
 import com.quackware.tric.R;
+import com.quackware.tric.database.DatabaseHelper.OnNewItemInsertedListener;
 import com.quackware.tric.ui.view.PieChart;
 import com.quackware.tric.ui.view.PieChart.OnSliceSelectedListener;
 
@@ -34,15 +35,29 @@ public class MainActivity extends Activity {
 			MyApplication.refreshFacebookToken();
 		}
 		
-		mAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1);
+		mAdapter = new ArrayAdapter<String>(this,R.layout.stat_layout);
 		ListView lv = (ListView)findViewById(R.id.main_mostrecent_lv);
 		lv.setAdapter(mAdapter);
+		
+		if(savedInstanceState == null)
+		{
+			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MyApplication.getInstance());
+			SharedPreferences.Editor e = prefs.edit();
+			e.putStringSet("mostRecentStats", new HashSet<String>());
+			e.commit();
+		}
 	}
 	
 	@Override
 	public void onResume()
 	{
 		super.onResume();
+		refreshMostRecentStats();
+		MyApplication.getDatabaseHelper().OnNewItemInsertedListener(listener);
+	}
+	
+	private void refreshMostRecentStats()
+	{
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MyApplication.getInstance());
 		HashSet<String> mostRecentStatsSet = (HashSet<String>) prefs.getStringSet("mostRecentStats", new HashSet<String>());
 		Object[] mostRecentStats = mostRecentStatsSet.toArray();
@@ -90,6 +105,16 @@ public class MainActivity extends Activity {
 				}
 			}});
 	}
+	
+	private OnNewItemInsertedListener listener = new OnNewItemInsertedListener()
+	{
+		@Override
+		public void OnNewItemInserted()
+		{
+			refreshMostRecentStats();
+		}
+		
+	};
 	
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data)

@@ -34,8 +34,6 @@ import android.widget.Toast;
 public class CollectionService extends Service {
 
 	private Handler mHandler;
-	private DatabaseHelper mDatabaseHelper;
-	
 	private ArrayList<ArgRunnable> mRunnableList;
 	
 	private final IBinder mBinder = new CollectionBinder();
@@ -45,7 +43,6 @@ public class CollectionService extends Service {
 	{
 		super.onCreate();
 		mHandler = new Handler();
-		mDatabaseHelper = new DatabaseHelper(this);
 		mRunnableList = new ArrayList<ArgRunnable>();
 	}
 	
@@ -158,7 +155,7 @@ public class CollectionService extends Service {
 			if(!mStats.refreshStats())
 			{
 				//Not asynchronous, we can go ahead and insert now.
-				mDatabaseHelper.insertNewStat(mStats);
+				MyApplication.getDatabaseHelper().insertNewStat(mStats);
 			}
 			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MyApplication.getInstance());
 			int collectionInterval = Integer.parseInt(prefs.getString("edittext_collectinterval_" + mStats.getName(), "" + mStats.getDefaultCollectionInterval()));
