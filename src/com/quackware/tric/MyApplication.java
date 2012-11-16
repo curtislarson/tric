@@ -8,6 +8,7 @@ import com.facebook.android.Facebook;
 import com.facebook.android.Facebook.ServiceListener;
 import com.facebook.android.FacebookError;
 import com.facebook.android.Facebook.DialogListener;
+import com.quackware.tric.database.StatData;
 import com.quackware.tric.service.CollectionService;
 import com.quackware.tric.service.CollectionService.CollectionBinder;
 import com.quackware.tric.stats.Stats;
@@ -39,15 +40,12 @@ public class MyApplication extends Application
 	
 	private static Facebook mFacebook;
 	private static AsyncFacebookRunner mAsyncRunner;
-	
-	
-	//Going to need to extend facebook auth token here potentially (or in the tric category detail activity)
+
 	@Override
 	public void onCreate()
 	{
 		super.onCreate();
 		instance = this;
-		
 		mFacebook = new Facebook(FacebookStats.FACEBOOK_APP_ID);
 		mAsyncRunner = new AsyncFacebookRunner(mFacebook);
 		

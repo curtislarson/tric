@@ -10,6 +10,7 @@ import com.facebook.android.FacebookError;
 import com.facebook.android.Facebook.DialogListener;
 import com.quackware.tric.MyApplication;
 import com.quackware.tric.database.DatabaseHelper;
+import com.quackware.tric.database.StatData;
 import com.quackware.tric.stats.Stats;
 import com.quackware.tric.stats.AppStats.NumberOfDownloadedAppsInstalled;
 import com.quackware.tric.stats.AppStats.NumberOfTotalAppsInstalled;
@@ -38,7 +39,7 @@ public class CollectionService extends Service {
 	private ArrayList<ArgRunnable> mRunnableList;
 	
 	private final IBinder mBinder = new CollectionBinder();
-	
+
 	@Override
 	public void onCreate()
 	{

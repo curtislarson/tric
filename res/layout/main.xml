@@ -3,19 +3,27 @@
     xmlns:pie="http://schemas.android.com/apk/res/com.quackware.tric"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="@drawable/graphpaper"
     android:gravity="center"
-    android:background="@drawable/graphpaper">
+    android:orientation="vertical" >
+
     <com.quackware.tric.ui.view.PieChart
         android:id="@+id/piechart"
         android:layout_width="match_parent"
-        android:layout_height="0dip"
-        android:layout_weight="100"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:padding="10dp"
         pie:highlightStrength="1.6"
         pie:labelColor="@color/main_tan"
         pie:pieRotation="0"
-        pie:showText="true"
-        android:layout_gravity="center"/>
+        pie:showText="true" />
+
+    <ListView
+        android:id="@+id/main_mostrecent_lv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" 
+        android:background="@android:color/white">   
+        </ListView>
 
 </LinearLayout>

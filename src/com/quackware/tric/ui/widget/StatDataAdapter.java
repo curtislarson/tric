@@ -44,29 +44,7 @@ public class StatDataAdapter extends ArrayAdapter<StatData>
 			TextView tv = (TextView) v.findViewById(R.id.tricdetail_tv);
 			if (tv != null) 
 			{
-				SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-				String newTimestamp = "";
-				try {
-					Calendar c = Calendar.getInstance();
-					c.setTime(df.parse(data.mTimestamp));
-					newTimestamp = c.get(Calendar.MONTH) + "/" + c.get(Calendar.DAY_OF_MONTH) + "/" +  c.get(Calendar.YEAR);
-				} catch (ParseException e) {
-					newTimestamp = data.mTimestamp;
-				}
-				switch (data.mDataType) 
-				{
-				case TIME:
-					Date d = new Date(Long.parseLong(data.mData));
-					DateFormat f = new SimpleDateFormat("HH:mm:ss");
-					String formatedDate = f.format(d);
-					tv.setText("Data: " + formatedDate + "\nTimestamp: " + newTimestamp);
-					break;
-				case STRING:
-				case NUMBER:
-				default:
-					tv.setText("Data: " + data.mData + "\nTimestamp: " + newTimestamp);
-					break;
-				}
+				tv.setText(data.toString());
 			}
 		}
 		return v;

@@ -3,6 +3,8 @@ package com.quackware.tric.database;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Iterator;
 
 import com.quackware.tric.MyApplication;
 import com.quackware.tric.database.SelectType.StatType;
@@ -12,9 +14,11 @@ import com.quackware.tric.stats.Stats.DataType;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.preference.PreferenceManager;
 
 public class DatabaseHelper extends SQLiteOpenHelper{
 	
@@ -191,6 +195,21 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		db.insert(pStats.getName(), null, values);
 		
 		db.close();
+		
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MyApplication.getInstance());
+		HashSet<String> mostRecent = (HashSet<String>) prefs.getStringSet("mostRecentStats", new HashSet<String>());
+		
+		StatData temp = new StatData();
+		temp.mData = pStats.getStats().toString();
+		temp.mTimestamp = dateFormat.format(date);
+		temp.mDataType = pStats.getDataType();
+		temp.mName = pStats.getName();
+		mostRecent.add(temp.toString());
+		
+		SharedPreferences.Editor editor = prefs.edit();
+		editor.putStringSet("mostRecentStats", mostRecent);
+		editor.commit();
+		
 	}
 	
 	private void dropTables(SQLiteDatabase db)
