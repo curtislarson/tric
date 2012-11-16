@@ -2,8 +2,8 @@ package com.quackware.tric.ui;
 
 import com.quackware.tric.MyApplication;
 import com.quackware.tric.R;
-import com.quackware.tric.ui.widget.PieChart;
-import com.quackware.tric.ui.widget.PieChart.OnSliceSelectedListener;
+import com.quackware.tric.ui.view.PieChart;
+import com.quackware.tric.ui.view.PieChart.OnSliceSelectedListener;
 
 import android.app.Activity;
 import android.content.Intent;

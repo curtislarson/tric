@@ -11,7 +11,7 @@
         android:text="Choose an Option"
         android:textColor="@android:color/black"
         android:layout_gravity="center"/>
-    <com.quackware.tric.ui.widget.PieChart
+    <com.quackware.tric.ui.view.PieChart
         android:id="@+id/piechart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

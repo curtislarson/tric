@@ -12,7 +12,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-package com.quackware.tric.ui.widget;
+package com.quackware.tric.ui.view;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
@@ -136,7 +136,7 @@ public class PieChart extends ViewGroup {
      *
      * @param context
      * @param attrs   An attribute set which can contain attributes from
-     *                {@link com.example.android.customviews.R.styleable.PieChart} as well as attributes inherited
+     *                {@link com.quackware.tric.ui.view.example.android.customviews.R.styleable.PieChart} as well as attributes inherited
      *                from {@link android.view.View}.
      */
     public PieChart(Context context, AttributeSet attrs) {

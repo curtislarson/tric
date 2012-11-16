@@ -11,6 +11,7 @@ import com.quackware.tric.database.SelectType.StatType;
 import com.quackware.tric.database.SelectType.TimeFrame;
 import com.quackware.tric.database.StatData;
 import com.quackware.tric.ui.fragment.GraphFragment;
+import com.quackware.tric.ui.widget.StatDataAdapter;
 
 import android.app.Activity;
 import android.app.FragmentTransaction;
@@ -19,9 +20,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class TricDetailActivity extends Activity {
+	
+	private StatDataAdapter mAdapter;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -34,8 +38,7 @@ public class TricDetailActivity extends Activity {
 		
 		setupButtonListeners();
 	}
-	
-	
+
 	private void setupButtonListeners()
 	{
 		((Button)findViewById(R.id.tricdetail_preferences_button)).setOnClickListener(new OnClickListener(){
@@ -64,7 +67,6 @@ public class TricDetailActivity extends Activity {
 	}
 	private void loadTric(String tricName)
 	{
-		LinearLayout ll = (LinearLayout)findViewById(R.id.tricdetail_ll);
 		DatabaseHelper db = new DatabaseHelper(this);
 		ArrayList<StatData> statData = db.selectStats(tricName, StatType.HIGHEST, TimeFrame.ALLTIME,20);
 		
@@ -73,25 +75,9 @@ public class TricDetailActivity extends Activity {
 		trans.add(R.id.tricdetail_maplayout, frag).commit();
 		
 		((TextView)findViewById(R.id.tricdetail_trictitle_tv)).setText(tricName);
-		for(int i = 0;i<statData.size();i++)
-		{
-			TextView tv = new TextView(this);
-			switch(statData.get(i).mDataType)
-			{
-			case TIME:
-				Date d = new Date(Long.parseLong(statData.get(i).mData));
-				DateFormat f = new SimpleDateFormat("HH:mm:ss");
-				String formatedDate = f.format(d);
-				tv.setText("Data: " + formatedDate + "\nTimestamp: " + statData.get(i).mTimestamp);
-				break;
-			case STRING:
-			case NUMBER:
-			default:
-				tv.setText("Data: " + statData.get(i).mData + "\nTimestamp: " + statData.get(i).mTimestamp);
-				break;
-			}
-			
-			ll.addView(tv);
-		}
+		
+		mAdapter = new StatDataAdapter(this,R.layout.stat_layout,statData);
+		ListView statListView = (ListView)findViewById(R.id.tricdetail_listvew);
+		statListView.setAdapter(mAdapter);
 	}
 }
