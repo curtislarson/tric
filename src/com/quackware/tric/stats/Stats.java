@@ -43,6 +43,11 @@ public abstract class Stats {
 		return mData;
 	}
 	
+	public void setStats(Object o)
+	{
+		mData = o;
+	}
+	
 	@Override
 	public boolean equals(Object o)
 	{
