@@ -6,6 +6,9 @@ import com.quackware.tric.stats.Stats;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -41,11 +44,49 @@ public class TricCategoryDetailActivity extends Activity implements OnClickListe
 				b.setText(s.getName());
 				b.setTag(s.getName());
 				b.setOnClickListener(this);
-				Drawable img = getResources().getDrawable(R.drawable.gnexus);
-				b.setCompoundDrawablesWithIntrinsicBounds(img, null,null,null);
+				Drawable img = getCategoryDrawable(category,s.getType());
+				if(img != null)
+				{
+					b.setCompoundDrawablesWithIntrinsicBounds(img, null,null,null);
+				}
 				ll.addView(b);
 			}
 		}
+	}
+	
+	private Drawable getCategoryDrawable(String category, String optionalSocialCategory)
+	{
+		Resources res = getResources();
+		if(category.equals("SocialStats"))
+		{
+			if(optionalSocialCategory != null)
+			{
+				if(optionalSocialCategory.equals("FacebookStats"))
+				{
+					return resize(res.getDrawable(R.drawable.facebook));
+				}
+			}
+			return res.getDrawable(R.drawable.gnexus);
+		}
+		else if(category.equals("PhoneStats"))
+		{
+			return resize(res.getDrawable(R.drawable.gnexus));
+		}
+		else if(category.equals("AppStats"))
+		{
+			return resize(res.getDrawable(R.drawable.android_image));
+		}
+		else
+		{
+			return null;
+		}
+	}
+	
+	private Drawable resize(Drawable image) 
+	{
+	    Bitmap d = ((BitmapDrawable)image).getBitmap();
+	    Bitmap bitmapOrig = Bitmap.createScaledBitmap(d, 75, 75, false);
+	    return new BitmapDrawable(bitmapOrig);
 	}
 
 	@Override

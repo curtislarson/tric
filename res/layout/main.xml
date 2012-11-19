@@ -21,7 +21,7 @@
     <ListView
         android:id="@+id/main_mostrecent_lv"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dip"
         android:layout_weight="1" 
         android:background="@drawable/border_ui"
         android:layout_margin="10dip"
