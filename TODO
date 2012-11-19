@@ -8,11 +8,6 @@ The user should be able to set which tric they want to monitor and which ones th
 
 I really want it to look good. Interface is key in the first version
 
-Create detail view in which we can pass it a tric and maybe a type for data and have it display the stat for the tric
-	- Also have a link to the preferences for the tric
-	- In the future have a chart view
-	- Have a button for force refersh
-
 -Add more trics
 
 -Rework tric/stats naming system
