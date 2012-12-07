@@ -21,6 +21,7 @@ import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
 import android.text.InputType;
 
@@ -114,6 +115,10 @@ public class MyPreferenceActivity extends PreferenceActivity implements OnShared
 	
 	private PreferenceScreen generatePreferenceScreen(Stats s)
 	{
+		PreferenceCategory prefCategory = new PreferenceCategory(this);
+		prefCategory.setTitle(s.getName());
+		
+		
 		CheckBoxPreference sharePreference = new CheckBoxPreference(this);
 		sharePreference.setKey("checkbox_share_" + s.getName());
 		sharePreference.setTitle(getString(R.string.pref_share_title));
@@ -138,10 +143,11 @@ public class MyPreferenceActivity extends PreferenceActivity implements OnShared
 		ps.setPersistent(false);
 		ps.setTitle(s.getName() + " tric");
 		
+		prefCategory.addPreference(collectPreference);
+		prefCategory.addPreference(collectionIntervalPreference);
+		prefCategory.addPreference(sharePreference);
 		
-		ps.addPreference(collectPreference);
-		ps.addPreference(collectionIntervalPreference);
-		ps.addPreference(sharePreference);
+		ps.addPreference(prefCategory);
 		
 		return ps;
 	}
