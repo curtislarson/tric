@@ -3,21 +3,29 @@
     xmlns:pie="http://schemas.android.com/apk/res/com.quackware.tric"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/graphpaper"
+    android:background="@drawable/background_grey"
     android:gravity="center"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <com.quackware.tric.ui.view.PieChart
         android:id="@+id/piechart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:padding="10dip"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip"
+        android:paddingTop="10dip"
         pie:highlightStrength="1.6"
         pie:labelColor="@color/main_tan"
         pie:pieRotation="0"
         pie:showText="true" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/LabelText"
+        android:text="Most Recent"
+        />
     <ListView
         android:id="@+id/main_mostrecent_lv"
         android:layout_width="wrap_content"
@@ -25,7 +33,6 @@
         android:layout_weight="1" 
         android:background="@drawable/border_ui"
         android:layout_margin="10dip"
-        android:cacheColorHint="#00000000">   
-        </ListView>
+        android:cacheColorHint="#00000000"/>
 
 </LinearLayout>

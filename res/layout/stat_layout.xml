@@ -3,6 +3,4 @@
     android:id="@+id/tricdetail_tv"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:padding="3dp"
-    android:textColor="@android:color/black"
-    android:textSize="10dip"/>
+	style="@style/ListViewText"/>

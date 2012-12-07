@@ -2,11 +2,19 @@
     
     <!-- PHONE STATS -->
     <string name="TotalPhoneUptime_summary">The total uptime of your phone (Including deep sleep)</string>
+    <string name="TotalPhoneUptime_pretty">Phone Uptime</string>
     <string name="TotalPhoneUptimeNoSleep_summary">The total uptime of your phone (Not including deep sleep)</string>
+    <string name="TotalPhoneUptimeNoSleep_pretty">Phone Uptime (No Sleep)</string>
     <!-- END PHONE STATS -->
     <!-- APPSTATS -->
     <string name="NumberOfDownloadedAppsInstalled_summary">The number of apps you have installed (Not including system apps)</string>
+    <string name="NumberOfDownloadedAppsInstalled_pretty">Installed Apps</string>
     <string name="NumberOfTotalAppsInstalled_summary">The total number of apps you have installed</string>
+    <string name="NumberOfTotalAppsInstalled_pretty">Installed Apps (Including System)</string>
     <string name="NumberOfTotalAppsUninstalled_summary">The total number of apps you have uninstalled</string>
+    <string name="NumberOfTotalAppsUninstalled_pretty">Uninstalled Apps</string>
     <!-- END APPSTATS -->
+    
+    <!-- SOCIAL STATS -->
+    <!-- END SOCIAL STATS -->
 </resources>

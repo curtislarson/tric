@@ -97,7 +97,7 @@ public class MyPreferenceActivity extends PreferenceActivity implements OnShared
 			{
 				phonePs.addPreference(ps);
 			}
-			else if(s.getType().equals("SocialStats"))
+			else if(s.getType().equals("FacebookStats") || s.getType().equals("SocialStats"))
 			{
 				socialPs.addPreference(ps);
 			}
@@ -137,6 +137,7 @@ public class MyPreferenceActivity extends PreferenceActivity implements OnShared
 		ps.setKey("button_" + s.getName());
 		ps.setPersistent(false);
 		ps.setTitle(s.getName() + " tric");
+		
 		
 		ps.addPreference(collectPreference);
 		ps.addPreference(collectionIntervalPreference);
