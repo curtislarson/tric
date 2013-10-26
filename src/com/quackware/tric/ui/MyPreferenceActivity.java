@@ -91,6 +91,7 @@ public class MyPreferenceActivity extends PreferenceActivity implements OnShared
 		PreferenceScreen phonePs = (PreferenceScreen)findPreference("button_phonestats_category_key");
 		PreferenceScreen socialPs = (PreferenceScreen)findPreference("button_socialstats_category_key");
 		PreferenceScreen appPs = (PreferenceScreen)findPreference("button_appstats_category_key");
+		PreferenceScreen trafficPs = (PreferenceScreen)findPreference("button_trafficstats_category_key");
 		for(Stats s : stats)
 		{
 			PreferenceScreen ps = generatePreferenceScreen(s);
@@ -105,6 +106,10 @@ public class MyPreferenceActivity extends PreferenceActivity implements OnShared
 			else if(s.getType().equals("AppStats"))
 			{
 				appPs.addPreference(ps);
+			}
+			else if (s.getType().equals("TrafficStats"))
+			{
+				trafficPs.addPreference(ps);
 			}
 			else
 			{

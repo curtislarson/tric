@@ -17,4 +17,9 @@
     
     <!-- SOCIAL STATS -->
     <!-- END SOCIAL STATS -->
+    
+    <!-- TRAFFIC STATS -->
+    <!-- END TRAFFIC STATS -->
+    <string name="NumberOfMobileMegabytesTransmitted_summary">The number of megabytes you have transmitted on a mobile network</string>
+    <string name="NumberOfMobileMegabytesTransmitted_pretty">Mobile MB Transmitted</string>
 </resources>

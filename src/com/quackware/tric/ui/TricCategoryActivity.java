@@ -53,6 +53,15 @@ public class TricCategoryActivity extends Activity {
 				intent.putExtra("Category","SocialStats");
 				startActivity(intent);
 			}});
+		
+		((Button)findViewById(R.id.cat_trafficstats)).setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(TricCategoryActivity.this,TricCategoryDetailActivity.class);
+				intent.putExtra("Category","TrafficStats");
+				startActivity(intent);
+			}});
 	}
 
 }

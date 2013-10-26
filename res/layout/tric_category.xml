@@ -53,6 +53,18 @@
         <View
             android:layout_width="0dp"
             android:layout_height="30dip" />
+        
+       <Button
+            android:id="@+id/cat_trafficstats"
+            style="@style/ButtonText"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/clickable_bar_green"
+            android:text="@string/traffic" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="30dip" />
 
         <LinearLayout
             android:layout_width="fill_parent"

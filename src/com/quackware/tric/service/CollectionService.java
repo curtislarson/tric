@@ -19,6 +19,7 @@ import com.quackware.tric.stats.PhoneStats.*;
 import com.quackware.tric.stats.SocialStats.FacebookStats;
 import com.quackware.tric.stats.SocialStats.NumberOfFacebookFriends;
 import com.quackware.tric.stats.SocialStats.NumberOfFacebookWallPosts;
+import com.quackware.tric.stats.TrafficStats.NumberOfMobileMegabytesTransmitted;
 
 import android.app.Activity;
 import android.app.Service;
@@ -98,6 +99,10 @@ public class CollectionService extends Service {
 	
 	public void beginCollection()
 	{
+		// This should probably be improved by searching through each of our class structures,
+		// starting with AppStats, PhoneStats, etc and looking for all the inherited classes.
+		// From there all we need to do to add a new tric is to add the file to the folder
+		// and implement the correct methods.
 		//BEGIN PHONE STATS
 		TotalPhoneUptime tpu = new TotalPhoneUptime();
 		TotalPhoneUptimeNoSleep tpuns = new TotalPhoneUptimeNoSleep();
@@ -109,13 +114,17 @@ public class CollectionService extends Service {
 		NumberOfTotalAppsUninstalled u = new NumberOfTotalAppsUninstalled();
 		//END APP STATS
 		
+		//BEGIN TRAFFIC STATS
+		NumberOfMobileMegabytesTransmitted mobileMbT = new NumberOfMobileMegabytesTransmitted();
+		//END TRAFFIC STATS
+		
 		//BEGIN SOCIAL STATS
 		NumberOfFacebookFriends fbFriends = new NumberOfFacebookFriends();
 		NumberOfFacebookWallPosts fbWallPosts = new NumberOfFacebookWallPosts();
 		//END SOCIAL STATS
 		
-		launch(tpu,tpuns,d,totalApps,u,fbFriends,fbWallPosts);
-		MyApplication.addStats(tpu,tpuns,d,totalApps,u,fbFriends,fbWallPosts,fbWallPosts);
+		launch(tpu,tpuns,d,totalApps,u,mobileMbT,fbFriends,fbWallPosts);
+		MyApplication.addStats(tpu,tpuns,d,totalApps,u,mobileMbT,fbFriends,fbWallPosts,fbWallPosts);
 	}
 	
 	private void launch(Stats...pStats)

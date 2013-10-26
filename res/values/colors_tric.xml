@@ -31,6 +31,8 @@
     <color name="main_light_turq">#026783</color>
     <color name="main_red">#AC1A25</color>
     <color name="main_light_red">#EB2132</color>
+    <color name="main_green">#094102</color>
+    <color name="main_light_green">#1FCF08</color>
     <color name="main_orange">#D97925</color>
     <color name="main_light_orange">#F69D4F</color>
     <color name="main_tan">#EFE8BE</color>

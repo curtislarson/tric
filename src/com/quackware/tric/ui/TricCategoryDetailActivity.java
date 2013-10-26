@@ -76,6 +76,11 @@ public class TricCategoryDetailActivity extends Activity implements OnClickListe
 		{
 			return resize(res.getDrawable(R.drawable.android_image));
 		}
+		else if(category.equals("TraficStats"))
+		{
+			//TODO replace this with a better drawable.
+			return resize(res.getDrawable(R.drawable.gnexus));
+		}
 		else
 		{
 			return null;
