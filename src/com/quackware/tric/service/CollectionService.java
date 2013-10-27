@@ -19,6 +19,7 @@ import com.quackware.tric.stats.PhoneStats.*;
 import com.quackware.tric.stats.SocialStats.FacebookStats;
 import com.quackware.tric.stats.SocialStats.NumberOfFacebookFriends;
 import com.quackware.tric.stats.SocialStats.NumberOfFacebookWallPosts;
+import com.quackware.tric.stats.TrafficStats.NumberOfMobileMegabytesReceived;
 import com.quackware.tric.stats.TrafficStats.NumberOfMobileMegabytesTransmitted;
 
 import android.app.Activity;
@@ -116,6 +117,7 @@ public class CollectionService extends Service {
 		
 		//BEGIN TRAFFIC STATS
 		NumberOfMobileMegabytesTransmitted mobileMbT = new NumberOfMobileMegabytesTransmitted();
+		NumberOfMobileMegabytesReceived mobileMbR = new NumberOfMobileMegabytesReceived();
 		//END TRAFFIC STATS
 		
 		//BEGIN SOCIAL STATS
@@ -123,8 +125,8 @@ public class CollectionService extends Service {
 		NumberOfFacebookWallPosts fbWallPosts = new NumberOfFacebookWallPosts();
 		//END SOCIAL STATS
 		
-		launch(tpu,tpuns,d,totalApps,u,mobileMbT,fbFriends,fbWallPosts);
-		MyApplication.addStats(tpu,tpuns,d,totalApps,u,mobileMbT,fbFriends,fbWallPosts,fbWallPosts);
+		launch(tpu,tpuns,d,totalApps,u,mobileMbT,mobileMbR,fbFriends,fbWallPosts);
+		MyApplication.addStats(tpu,tpuns,d,totalApps,u,mobileMbT,mobileMbR,fbFriends,fbWallPosts,fbWallPosts);
 	}
 	
 	private void launch(Stats...pStats)
