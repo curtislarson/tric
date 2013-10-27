@@ -120,9 +120,9 @@ public class MyPreferenceActivity extends PreferenceActivity implements OnShared
 	
 	private PreferenceScreen generatePreferenceScreen(Stats s)
 	{
-		PreferenceCategory prefCategory = new PreferenceCategory(this);
-		prefCategory.setTitle(s.getName());
-		
+		//PreferenceCategory prefCategory = new PreferenceCategory(this);
+		//prefCategory.setTitle(s.getName());
+		//prefCategory.setKey("preference_category_" + s.getName());		
 		
 		CheckBoxPreference sharePreference = new CheckBoxPreference(this);
 		sharePreference.setKey("checkbox_share_" + s.getName());
@@ -148,11 +148,9 @@ public class MyPreferenceActivity extends PreferenceActivity implements OnShared
 		ps.setPersistent(false);
 		ps.setTitle(s.getName() + " tric");
 		
-		//prefCategory.addPreference(collectPreference);
-		//prefCategory.addPreference(collectionIntervalPreference);
-		//prefCategory.addPreference(sharePreference);
-		
-		ps.addPreference(prefCategory);
+		ps.addPreference(collectPreference);
+		ps.addPreference(collectionIntervalPreference);
+		ps.addPreference(sharePreference);
 		
 		return ps;
 	}
