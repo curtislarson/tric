@@ -148,9 +148,9 @@ public class MyPreferenceActivity extends PreferenceActivity implements OnShared
 		ps.setPersistent(false);
 		ps.setTitle(s.getName() + " tric");
 		
-		prefCategory.addPreference(collectPreference);
-		prefCategory.addPreference(collectionIntervalPreference);
-		prefCategory.addPreference(sharePreference);
+		//prefCategory.addPreference(collectPreference);
+		//prefCategory.addPreference(collectionIntervalPreference);
+		//prefCategory.addPreference(sharePreference);
 		
 		ps.addPreference(prefCategory);
 		
