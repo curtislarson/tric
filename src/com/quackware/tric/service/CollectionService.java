@@ -107,6 +107,7 @@ public class CollectionService extends Service {
 		//BEGIN PHONE STATS
 		TotalPhoneUptime tpu = new TotalPhoneUptime();
 		TotalPhoneUptimeNoSleep tpuns = new TotalPhoneUptimeNoSleep();
+		TotalPhoneRam tpr = new TotalPhoneRam();
 		//END PHONE STATS
 		
 		//BEGIN APP STATS
@@ -125,8 +126,8 @@ public class CollectionService extends Service {
 		NumberOfFacebookWallPosts fbWallPosts = new NumberOfFacebookWallPosts();
 		//END SOCIAL STATS
 		
-		launch(tpu,tpuns,d,totalApps,u,mobileMbT,mobileMbR,fbFriends,fbWallPosts);
-		MyApplication.addStats(tpu,tpuns,d,totalApps,u,mobileMbT,mobileMbR,fbFriends,fbWallPosts,fbWallPosts);
+		launch(tpu,tpuns,tpr,d,totalApps,u,mobileMbT,mobileMbR,fbFriends,fbWallPosts);
+		MyApplication.addStats(tpu,tpuns,tpr,d,totalApps,u,mobileMbT,mobileMbR,fbFriends,fbWallPosts,fbWallPosts);
 	}
 	
 	private void launch(Stats...pStats)
