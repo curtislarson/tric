@@ -3,31 +3,13 @@ package com.quackware.tric.service;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import com.facebook.android.AsyncFacebookRunner;
-import com.facebook.android.DialogError;
-import com.facebook.android.Facebook;
-import com.facebook.android.FacebookError;
-import com.facebook.android.Facebook.DialogListener;
 import com.quackware.tric.MyApplication;
-import com.quackware.tric.database.DatabaseHelper;
-import com.quackware.tric.database.StatData;
 import com.quackware.tric.stats.Stats;
-import com.quackware.tric.stats.AppStats.NumberOfDownloadedAppsInstalled;
-import com.quackware.tric.stats.AppStats.NumberOfTotalAppsInstalled;
-import com.quackware.tric.stats.AppStats.NumberOfTotalAppsUninstalled;
-import com.quackware.tric.stats.PhoneStats.*;
-import com.quackware.tric.stats.SocialStats.FacebookStats;
-import com.quackware.tric.stats.SocialStats.NumberOfFacebookFriends;
-import com.quackware.tric.stats.SocialStats.NumberOfFacebookWallPosts;
-import com.quackware.tric.stats.TrafficStats.NumberOfMobileMegabytesReceived;
-import com.quackware.tric.stats.TrafficStats.NumberOfMobileMegabytesTransmitted;
 
-import android.app.Activity;
 import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Binder;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
@@ -45,6 +27,7 @@ public class CollectionService extends Service {
 		"AppStats.NumberOfTotalAppsInstalled",
 		"AppStats.NumberOfTotalAppsUninstalled",
 		"PhoneStats.TotalPhoneRam",
+		"PhoneStats.TotalPhoneCpu",
 		"PhoneStats.TotalPhoneUptime",
 		"PhoneStats.TotalPhoneUptimeNoSleep",
 		"SocialStats.NumberOfFacebookFriends",
