@@ -211,7 +211,7 @@ public class MyApplication extends Application
 		return instance;
 	}
 	
-	public static void addStats(Stats...pStats)
+	public static void addStats(ArrayList<Stats> pStats)
 	{
 		for(Stats s : pStats)
 		{

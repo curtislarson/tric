@@ -39,6 +39,19 @@ public class CollectionService extends Service {
 	private ArrayList<ArgRunnable> mRunnableList;
 	
 	private final IBinder mBinder = new CollectionBinder();
+	
+	private static String[] TRICS = {
+		"AppStats.NumberOfDownloadedAppsInstalled",
+		"AppStats.NumberOfTotalAppsInstalled",
+		"AppStats.NumberOfTotalAppsUninstalled",
+		"PhoneStats.TotalPhoneRam",
+		"PhoneStats.TotalPhoneUptime",
+		"PhoneStats.TotalPhoneUptimeNoSleep",
+		"SocialStats.NumberOfFacebookFriends",
+		"SocialStats.NumberOfFacebookWallPosts",
+		"TrafficStats.NumberOfMobileMegabytesReceived",
+		"TrafficStats.NumberOfMObileMegabytesTransmitted"
+	};
 
 	@Override
 	public void onCreate()
@@ -73,7 +86,7 @@ public class CollectionService extends Service {
 		}
 	}
 	
-	public void cancelStatsCollection(Stats...pStats)
+	public void cancelStatsCollection(ArrayList<Stats> pStats)
 	{
 		//Iterator for safe deletion while iterating through list.
 		Iterator<ArgRunnable> it = mRunnableList.iterator();
@@ -92,45 +105,34 @@ public class CollectionService extends Service {
 		}
 	}
 	
-	public void refreshStatsInfo(Stats...pStats)
+	public void refreshStatsInfo(Stats pStats)
 	{
-		cancelStatsCollection(pStats);
-		launch(pStats);
+		ArrayList<Stats> statsArray = new ArrayList<Stats>();
+		statsArray.add(pStats);
+		cancelStatsCollection(statsArray);
+		launch(statsArray);
 	}
 	
 	public void beginCollection()
 	{
-		// This should probably be improved by searching through each of our class structures,
-		// starting with AppStats, PhoneStats, etc and looking for all the inherited classes.
-		// From there all we need to do to add a new tric is to add the file to the folder
-		// and implement the correct methods.
-		//BEGIN PHONE STATS
-		TotalPhoneUptime tpu = new TotalPhoneUptime();
-		TotalPhoneUptimeNoSleep tpuns = new TotalPhoneUptimeNoSleep();
-		TotalPhoneRam tpr = new TotalPhoneRam();
-		//END PHONE STATS
-		
-		//BEGIN APP STATS
-		NumberOfDownloadedAppsInstalled d = new NumberOfDownloadedAppsInstalled();
-		NumberOfTotalAppsInstalled totalApps = new NumberOfTotalAppsInstalled();
-		NumberOfTotalAppsUninstalled u = new NumberOfTotalAppsUninstalled();
-		//END APP STATS
-		
-		//BEGIN TRAFFIC STATS
-		NumberOfMobileMegabytesTransmitted mobileMbT = new NumberOfMobileMegabytesTransmitted();
-		NumberOfMobileMegabytesReceived mobileMbR = new NumberOfMobileMegabytesReceived();
-		//END TRAFFIC STATS
-		
-		//BEGIN SOCIAL STATS
-		NumberOfFacebookFriends fbFriends = new NumberOfFacebookFriends();
-		NumberOfFacebookWallPosts fbWallPosts = new NumberOfFacebookWallPosts();
-		//END SOCIAL STATS
-		
-		launch(tpu,tpuns,tpr,d,totalApps,u,mobileMbT,mobileMbR,fbFriends,fbWallPosts);
-		MyApplication.addStats(tpu,tpuns,tpr,d,totalApps,u,mobileMbT,mobileMbR,fbFriends,fbWallPosts,fbWallPosts);
+		ArrayList<Stats> statsToRun = new ArrayList<Stats>();
+		for(int i = 0; i < TRICS.length; i++) {
+			try 
+			{
+				Class<?> c = Class.forName("com.quackware.tric.stats." + TRICS[i]);
+				Stats stat = (Stats)c.newInstance();
+				statsToRun.add(stat);	
+			}
+			catch (Exception ex)
+			{
+				
+			}
+		}
+		launch(statsToRun);
+		MyApplication.addStats(statsToRun);
 	}
 	
-	private void launch(Stats...pStats)
+	private void launch(ArrayList<Stats> pStats)
 	{
 		//Add check to see if we should actually launch based on preferences for collecting.
 		for(Stats s : pStats)
