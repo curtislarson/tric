@@ -92,7 +92,7 @@ public class TricDetailActivity extends Activity {
 		DatabaseHelper db = MyApplication.getDatabaseHelper();
 		ArrayList<StatData> statData = db.selectStats(mTricName, StatType.HIGHEST, TimeFrame.ALLTIME,20);
 		
-		GraphFragment frag = new GraphFragment(mTricName,statData);
+		GraphFragment frag = GraphFragment.newInstance(mTricName, statData);
 		FragmentTransaction trans = getFragmentManager().beginTransaction();
 		trans.replace(R.id.tricdetail_maplayout, frag).commit();
 

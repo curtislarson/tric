@@ -6,9 +6,13 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import com.quackware.tric.stats.Stats;
 import com.quackware.tric.stats.Stats.DataType;
 
-public class StatData {
+public class StatData implements Parcelable {
 
 	
 	public String mName = "";
@@ -16,6 +20,17 @@ public class StatData {
 	public String mTimestamp;
 	public DataType mDataType;
 	
+	private StatData(Parcel in) {
+		mName = in.readString();
+		mData = in.readString();
+		mTimestamp = in.readString();
+		mDataType = Stats.DataType.values()[in.readInt()];
+	}
+	
+	public StatData()
+	{
+	}
+
 	public String toStringNoTimestamp()
 	{
 		String toString = toString();
@@ -61,6 +76,21 @@ public class StatData {
 			}
 			
 		}
+	}
+
+	@Override
+	public int describeContents()
+	{
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel out, int flags)
+	{
+		out.writeString(mName);
+		out.writeString(mData);
+		out.writeString(mTimestamp);
+		out.writeInt(mDataType.ordinal());
 	}
 
 }

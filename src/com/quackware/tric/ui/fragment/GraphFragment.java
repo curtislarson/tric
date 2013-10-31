@@ -21,6 +21,7 @@ import android.graphics.Color;
 import android.graphics.Paint.Align;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,17 +31,19 @@ import android.widget.LinearLayout;
 
 public class GraphFragment extends Fragment{
 	
-	private ArrayList<StatData> mData;
-	private String mName;
-	
 	public GraphFragment()
 	{
-		this("ERROR",null);
 	}
-	public GraphFragment(String pName, ArrayList<StatData> pData)
+	
+	public static GraphFragment newInstance(String mTricName, ArrayList<StatData> statData) 
 	{
-		mData = pData;
-		mName = pName;
+		GraphFragment graphFragment = new GraphFragment();
+		Bundle args = new Bundle();
+		args.putString("name", mTricName);
+		args.putParcelableArrayList("statData", statData);
+		graphFragment.setArguments(args);
+		
+		return graphFragment;
 	}
 	
 	@Override
@@ -77,6 +80,8 @@ public class GraphFragment extends Fragment{
 	
 	private GraphicalView createGraphView()
 	{
+		String mName = getArguments().getString("name");
+		ArrayList<StatData> mData = getArguments().getParcelableArrayList("statData");
 		int[] colors = new int[] { Color.parseColor("#77c4d3")};
 		XYMultipleSeriesRenderer renderer = buildBarRenderer(colors);
         renderer.setOrientation(Orientation.HORIZONTAL);
@@ -106,15 +111,16 @@ public class GraphFragment extends Fragment{
         return grfv;
 	}
 	
-	private Integer getHighestData()
+	private double getHighestData()
 	{
-		int highest = 0;
+		ArrayList<StatData> mData = getArguments().getParcelableArrayList("statData");
+		double highest = 0;
 		for(int i = 0;i<mData.size();i++)
 		{
 			//We want to check data type
-			if(Integer.parseInt(mData.get(i).mData) > highest)
+			if(Double.parseDouble(mData.get(i).mData) > highest)
 			{
-				highest = Integer.parseInt(mData.get(i).mData);
+				highest = Double.parseDouble(mData.get(i).mData);
 			}
 		}
 		return highest;
@@ -142,6 +148,8 @@ public class GraphFragment extends Fragment{
         }
 	
 	protected XYMultipleSeriesDataset buildLineDataset() {
+		String mName = getArguments().getString("name");
+		ArrayList<StatData> mData = getArguments().getParcelableArrayList("statData");
         XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
         CategorySeries series = new CategorySeries(mName);
         for(int i = 0;i<mData.size();i++)
