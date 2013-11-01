@@ -65,7 +65,8 @@ public abstract class Stats {
 	{
 		STRING,
 		TIME,
-		NUMBER
+		NUMBER,
+		KEY_VALUE
 	};
 
 }
