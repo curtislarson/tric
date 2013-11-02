@@ -34,6 +34,8 @@ public abstract class Stats {
 	
 	public abstract String getName();
 	
+	public abstract String getPrettyName();
+	
 	public abstract int getDefaultCollectionInterval();
 	
 	public abstract DataType getDataType();

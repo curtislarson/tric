@@ -41,7 +41,7 @@ public class TricCategoryDetailActivity extends Activity implements OnClickListe
 			if(s.getType().equals(category) || (s.getType().equals("FacebookStats") && category.equals("SocialStats")))
 			{
 				Button b = new Button(this);
-				b.setText(s.getName());
+				b.setText(s.getPrettyName());
 				b.setTag(s.getName());
 				b.setOnClickListener(this);
 				Drawable img = getCategoryDrawable(category,s.getType());

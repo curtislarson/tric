@@ -6,6 +6,8 @@ public abstract class TrafficStats extends Stats
 {
 
 	private String mType = "TrafficStats";
+	
+	private String mPrettyName = "Traffic Statistics";
 	public TrafficStats(String pName)
 	{
 		super(pName);
@@ -16,6 +18,11 @@ public abstract class TrafficStats extends Stats
 	public String getType()
 	{
 		return mType;
+	}
+	
+	@Override
+	public String getPrettyName() {
+		return mPrettyName;
 	}
 
 }
