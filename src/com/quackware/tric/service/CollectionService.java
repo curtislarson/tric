@@ -26,6 +26,7 @@ public class CollectionService extends Service {
 		"AppStats.NumberOfDownloadedAppsInstalled",
 		"AppStats.NumberOfTotalAppsInstalled",
 		"AppStats.NumberOfTotalAppsUninstalled",
+		"AppStats.NumberOfAppsRunning",
 		"PhoneStats.TotalPhoneRam",
 		"PhoneStats.TotalPhoneCpu",
 		"PhoneStats.TotalPhoneUptime",
@@ -104,6 +105,10 @@ public class CollectionService extends Service {
 			{
 				Class<?> c = Class.forName("com.quackware.tric.stats." + TRICS[i]);
 				Stats stat = (Stats)c.newInstance();
+				if (stat.getNeedsContext())
+				{
+					stat.setContext(this);
+				}
 				statsToRun.add(stat);	
 			}
 			catch (Exception ex)

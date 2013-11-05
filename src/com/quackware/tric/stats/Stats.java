@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.quackware.tric.MyApplication;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
@@ -13,6 +14,10 @@ public abstract class Stats {
 	protected Object mData;
 
 	protected int mDefaultCollectionInterval = 60;
+	
+	// Optional context object for stats that need it
+	protected Context mContext = null;
+	protected boolean mNeedsContext = false;
 	
 	public static ArrayList<String> mStatsNames = new ArrayList<String>();
 	
@@ -60,6 +65,15 @@ public abstract class Stats {
 				return true;
 		}
 		return false;
+	}
+	
+	public void setContext(Context pContext) {
+		mContext = pContext;
+	}
+	
+	public boolean getNeedsContext()
+	{
+		return mNeedsContext;
 	}
 	
 	
