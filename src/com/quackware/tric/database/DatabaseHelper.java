@@ -35,6 +35,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	private static final String TABLE_CREATE_START = "CREATE TABLE IF NOT EXISTS ";
 	private static final String TABLE_CREATE_END = " (_id INTEGER PRIMARY KEY, DATA STRING, TIMESTAMP DATE);";
 	private static final String TABLE_DROP = "DROP TABLE IF EXISTS ";
+	private static final String TABLE_EXISTS = "Select DISTINCT tbl_name FROM sqlite_master where tbl_name=";
 	
 	private OnNewItemInsertedListener mOnNewItemInserted = null;
 	
@@ -60,6 +61,16 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			//In the future this should be changed to add new tables in instead of just dropping
 			this.dropTables(db);
 			onCreate(db);
+		}
+		else if (oldVersion < DATABASE_VERSION)
+		{
+			for(int i = 0; i < Stats.mStatsNames.size();i++)
+			{
+				if(!tableExists(Stats.mStatsNames.get(i), db))
+				{
+					db.execSQL(TABLE_CREATE_START + Stats.mStatsNames.get(i) + TABLE_CREATE_END);
+				}
+			}
 		}
 	}
 	
@@ -217,6 +228,21 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		
 		mOnNewItemInserted.OnNewItemInserted();
 		
+	}
+	
+	private boolean tableExists(String tableName, SQLiteDatabase db)
+	{
+		Cursor cursor = db.rawQuery(TABLE_EXISTS + "'" + tableName + "'", null);
+		if (cursor != null)
+		{
+			if (cursor.getCount() > 0)
+			{
+				cursor.close();
+				return true;
+			}
+			cursor.close();
+		}
+		return false;
 	}
 	
 	private void dropTables(SQLiteDatabase db)
