@@ -20,6 +20,7 @@
     <string name="phone">Phone</string>
     <string name="social">Social</string>
     <string name="app">Applications</string>
+    <string name="app_individual">Individual Applications</string>
     <string name="traffic">Traffic</string>
     
     <string name="facebook_auth">Connect your Facebook Account</string>

@@ -97,6 +97,14 @@
                 android:background="@drawable/clickable_bar_orange"
                 android:text="@string/app" />
         </LinearLayout>
+        
+            <Button
+                android:id="@+id/cat_individual_appstats"
+                style="@style/ButtonText"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/clickable_bar_orange"
+                android:text="@string/app_individual" />
     </LinearLayout>
 
 </LinearLayout>
