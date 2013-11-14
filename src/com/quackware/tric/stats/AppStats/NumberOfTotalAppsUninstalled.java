@@ -8,6 +8,8 @@ import com.quackware.tric.stats.Stats.DataType;
 public class NumberOfTotalAppsUninstalled extends AppStats {
 	
 	private static String mName = "NumberOfTotalAppsUninstalled";
+	private static final String mPrettyName = "Number of Total Applications Uninstalled";
+	
 	private int mDefaultCollectionInterval = 60*24;
 
 	public NumberOfTotalAppsUninstalled() {
@@ -36,6 +38,11 @@ public class NumberOfTotalAppsUninstalled extends AppStats {
 	@Override
 	public DataType getDataType() {
 		return DataType.NUMBER;
+	}
+	
+	@Override
+	public String getPrettyName() {
+		return mPrettyName;
 	}
 
 }

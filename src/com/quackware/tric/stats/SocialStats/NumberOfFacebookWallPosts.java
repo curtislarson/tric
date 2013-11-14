@@ -5,6 +5,8 @@ public class NumberOfFacebookWallPosts extends FacebookStats{
 	private static final String TAG = "NumberOfFacebookWallPosts";
 	
 	private static String mName = "NumberOfFacebookWallPosts";
+	private static final String mPrettyName = "Number of Facebook Wall Posts";
+	
 	private static int mDefaultCollectionInterval = 60*12;
 	
 	public NumberOfFacebookWallPosts() {
@@ -31,6 +33,11 @@ public class NumberOfFacebookWallPosts extends FacebookStats{
 	@Override
 	public DataType getDataType() {
 		return DataType.NUMBER;
+	}
+	
+	@Override
+	public String getPrettyName() {
+		return mPrettyName;
 	}
 
 }

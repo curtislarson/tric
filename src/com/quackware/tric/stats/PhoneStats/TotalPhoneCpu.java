@@ -6,6 +6,7 @@ import java.io.RandomAccessFile;
 public class TotalPhoneCpu extends PhoneStats
 {
 	private static String mName = "TotalPhoneCpu";
+	private static final String mPrettyName = "Total Phone CPU (Ghz)";
 	private int mDefaultCollectionInterval = 12 * 60;
 	
 	public TotalPhoneCpu()
@@ -50,6 +51,11 @@ public class TotalPhoneCpu extends PhoneStats
 	public DataType getDataType()
 	{
 		return DataType.NUMBER;
+	}
+	
+	@Override
+	public String getPrettyName() {
+		return mPrettyName;
 	}
 
 }

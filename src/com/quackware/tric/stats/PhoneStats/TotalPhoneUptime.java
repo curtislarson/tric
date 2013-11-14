@@ -7,6 +7,7 @@ import android.os.SystemClock;
 public class TotalPhoneUptime extends PhoneStats{
 
 	private static String mName = "TotalPhoneUptime";
+	private static final String mPrettyName = "Total Phone Uptime (MS)";
 	private int mDefaultCollectionInterval = 10;
 	
 	public TotalPhoneUptime()
@@ -36,5 +37,10 @@ public class TotalPhoneUptime extends PhoneStats{
 	@Override
 	public DataType getDataType() {
 		return DataType.TIME;
+	}
+	
+	@Override
+	public String getPrettyName() {
+		return mPrettyName;
 	}
 }

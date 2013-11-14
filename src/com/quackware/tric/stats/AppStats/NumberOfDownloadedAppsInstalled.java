@@ -12,6 +12,7 @@ import com.quackware.tric.stats.Stats.DataType;
 public class NumberOfDownloadedAppsInstalled extends AppStats {
 
 	private static final String mName = "NumberOfDownloadedAppsInstalled";
+	private static final String mPrettyName = "Number of Downloaded Applications Installed";
 	private int mDefaultCollectionInterval = 60*12;
 	
 	
@@ -56,5 +57,10 @@ public class NumberOfDownloadedAppsInstalled extends AppStats {
 	@Override
 	public DataType getDataType() {
 		return DataType.NUMBER;
+	}
+	
+	@Override
+	public String getPrettyName() {
+		return mPrettyName;
 	}
 }

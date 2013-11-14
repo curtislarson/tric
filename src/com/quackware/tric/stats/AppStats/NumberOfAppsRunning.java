@@ -14,6 +14,8 @@ import android.content.pm.PackageManager;
 public class NumberOfAppsRunning extends AppStats {
 
 	private static final String mName = "NumberOfAppsRunning";
+	private static final String mPrettyName = "Number of Applications Running";
+	
 	private int mDefaultCollectionInterval = 60;
 	
 	public NumberOfAppsRunning() {
@@ -47,6 +49,11 @@ public class NumberOfAppsRunning extends AppStats {
 	@Override
 	public DataType getDataType() {
 		return DataType.NUMBER;
+	}
+	
+	@Override
+	public String getPrettyName() {
+		return mPrettyName;
 	}
 
 }

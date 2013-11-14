@@ -3,6 +3,7 @@ package com.quackware.tric.stats.TrafficStats;
 public class NumberOfMobileMegabytesReceived extends TrafficStats
 {
 	private static final String mName = "NumberOfMobileMegabytesReceived";
+	private static final String mPrettyName = "Mobile MB Received";
 	private int mDefaultCollectionInterval = 60;
 	
 	
@@ -34,6 +35,11 @@ public class NumberOfMobileMegabytesReceived extends TrafficStats
 	public DataType getDataType()
 	{
 		return DataType.NUMBER;
+	}
+	
+	@Override
+	public String getPrettyName() {
+		return mPrettyName;
 	}
 
 }

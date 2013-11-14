@@ -5,6 +5,7 @@ public class NumberOfFacebookFriends extends FacebookStats{
 	private static final String TAG = "NumberOfFacebookFriends";
 	
 	private static String mName = "NumberOfFacebookFriends";
+	private static final String mPrettyName = "Number of Facebook Friends";
 	private static int mDefaultCollectionInterval = 60*12;
 
 	public NumberOfFacebookFriends() {
@@ -31,6 +32,11 @@ public class NumberOfFacebookFriends extends FacebookStats{
 	@Override
 	public DataType getDataType() {
 		return DataType.NUMBER;
+	}
+	
+	@Override
+	public String getPrettyName() {
+		return mPrettyName;
 	}
 
 }

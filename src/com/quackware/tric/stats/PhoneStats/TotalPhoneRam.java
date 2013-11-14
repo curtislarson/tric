@@ -6,6 +6,7 @@ import java.io.RandomAccessFile;
 public class TotalPhoneRam extends PhoneStats
 {
 	private static String mName = "TotalPhoneRam";
+	private static final String mPrettyName = "Total Phone RAM (MB)";
 	private int mDefaultCollectionInterval = 12 * 60;
 	
 	public TotalPhoneRam()
@@ -53,6 +54,11 @@ public class TotalPhoneRam extends PhoneStats
 	public DataType getDataType()
 	{
 		return DataType.NUMBER;
+	}
+	
+	@Override
+	public String getPrettyName() {
+		return mPrettyName;
 	}
 
 }
