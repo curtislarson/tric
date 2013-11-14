@@ -34,7 +34,7 @@ public class CollectionService extends Service {
 		"SocialStats.NumberOfFacebookFriends",
 		"SocialStats.NumberOfFacebookWallPosts",
 		"TrafficStats.NumberOfMobileMegabytesReceived",
-		"TrafficStats.NumberOfMObileMegabytesTransmitted"
+		"TrafficStats.NumberOfMobileMegabytesTransmitted"
 	};
 
 	@Override
