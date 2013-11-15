@@ -33,6 +33,7 @@ public class CollectionService extends Service {
 		"PhoneStats.TotalPhoneUptimeNoSleep",
 		"SocialStats.NumberOfFacebookFriends",
 		"SocialStats.NumberOfFacebookWallPosts",
+		"SocialStats.NumberOfFacebookFriendRequests",
 		"TrafficStats.NumberOfMobileMegabytesReceived",
 		"TrafficStats.NumberOfMobileMegabytesTransmitted"
 	};
