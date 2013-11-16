@@ -2,6 +2,7 @@ package com.quackware.tric.service;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Timer;
 
 import com.quackware.tric.MyApplication;
 import com.quackware.tric.stats.Stats;
@@ -159,6 +160,32 @@ public class CollectionService extends Service {
 			{
 				//Not asynchronous, we can go ahead and insert now.
 				MyApplication.getDatabaseHelper().insertNewStat(mStats);
+			}
+			else
+			{
+				int numTimeouts = 0;
+				// Should we wait until mData has been set with a timeout?
+				while (mStats.getStats() == null)
+				{
+					try {
+						Thread.sleep(1000);
+					} catch(Exception ex) {}
+					numTimeouts++;
+					if (numTimeouts >= 15) {
+						break;
+					}
+				}
+				if (mStats.getStats() == null) {
+					// We failed to collect statistics.
+					Toast.makeText(getApplicationContext(), 
+								   "Unable to collect stats for " + 
+										   mStats.getName() + 
+										   ". Operation timed out", 
+									Toast.LENGTH_LONG).show();
+				}
+				else {
+					MyApplication.getDatabaseHelper().insertNewStat(mStats);
+				}
 			}
 			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MyApplication.getInstance());
 			int collectionInterval = Integer.parseInt(prefs.getString("edittext_collectinterval_" + mStats.getName(), "" + mStats.getDefaultCollectionInterval()));
